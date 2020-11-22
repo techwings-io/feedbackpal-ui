@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   testJwt() {
     return this.http
-      .post(`${env.dev.serverUrl}/auth/test/jwt`, {})
+      .post(`${env.api.serverUrl}/auth/test/jwt`, {})
       .subscribe((data) => {
         console.log(data);
       });

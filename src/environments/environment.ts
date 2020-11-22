@@ -12,7 +12,7 @@ export const environment = {
     redirectUri: window.location.origin,
     audience,
   },
-  dev: {
+  api: {
     serverUrl,
   },
 };
