@@ -1,0 +1,18 @@
+<div class="row mt-3">
+  <div class="col-md"></div>
+  <div class="col-md">
+    <h1 class="text-center">Welcome to Feedback Pal</h1>
+  </div>
+  <div class="col-md"></div>
+</div>
+
+<div class="row" *ngIf="!areThereFeedbackEvents()">
+  <div class="col-md"></div>
+  <div class="col-md text-center">
+    <p>It appears there are no events to leave feedback on</p>
+    <button class="btn btn-success btn-block" (click)="createFeedbackEvent()">
+      Create an event
+    </button>
+  </div>
+  <div class="col-md"></div>
+</div>

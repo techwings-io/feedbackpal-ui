@@ -1,0 +1,27 @@
+<div
+  class="card p-2"
+  (mouseover)="onMouseEvent($event)"
+  (mouseout)="onMouseEvent($event)"
+  [ngClass]="highlighted ? 'highlighted' : ''"
+>
+  <img [src]="smiley.path" alt="Upset" class="card-img-top" />
+  <div class="card-body">
+    <h4 class="card-title text-center">
+      {{ smiley.cardTitle }}
+    </h4>
+    <p class="text-center">
+      Want to tell us more?
+      <span><input name="displayForm" type="checkbox" #displayForm /></span>
+    </p>
+    <p class="card-body">
+      {{ smiley.cardText }}
+    </p>
+    <button
+      type="button"
+      class="btn btn-primary btn-block"
+      (click)="onSmileySelected()"
+    >
+      Send Feedback
+    </button>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="row mt-5">
+  <div class="col-md"></div>
+  <div class="col-md">
+    <h1 class="text-center mb-3">Create a Feedback event</h1>
+    <form [formGroup]="feedbackEventsForm">
+      <div class="form-group">
+        <app-input
+          [control]="feedbackEventsForm.get('eventName')"
+          [label]="'Provide the name for your event *'"
+          [inputType]="'text'"
+        ></app-input>
+        <app-input
+          [control]="feedbackEventsForm.get('description')"
+          [label]="'Provide the description for your event *'"
+          [inputType]="'text'"
+        ></app-input>
+        <mat-form-field>
+          <label for="validFrom"></label>
+          <input
+            matInput
+            [matDatepicker]="validFromPicker"
+            placeholder="Event valid from"
+            formControlName="validFrom"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="validFromPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #validFromPicker></mat-datepicker>
+        </mat-form-field>
+        <div class="mx-2"></div>
+        <mat-form-field>
+          <label for="validTo"></label>
+          <input
+            matInput
+            [matDatepicker]="validToPicker"
+            placeholder="Event valid until"
+            formControlName="validTo"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="validToPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #validToPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary mt-3"
+        [disabled]="!feedbackEventsForm.valid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+  <div class="col-md"></div>
+</div>
+
+<div class="mt-5">Form Contents: {{ feedbackEventsForm.value | json }}</div>
+<div>Form Valid: {{ feedbackEventsForm.valid }}</div>
+<div>
+  Errors around event name:
+  {{ feedbackEventsForm.controls.eventName.errors | json }}
+</div>
+<div>
+  Errors around event description:
+  {{ feedbackEventsForm.controls.description.errors | json }}
+</div>
+<div>
+  Errors around validFrom:
+  {{ feedbackEventsForm.controls.validFrom.errors | json }}
+</div>
+<div>
+  Errors around validTo:
+  {{ feedbackEventsForm.controls.validTo.errors | json }}
+</div>

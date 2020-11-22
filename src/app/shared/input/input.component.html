@@ -1,0 +1,34 @@
+<div class="form-group mb-3">
+  <label>{{ label }}</label>
+  <input
+    [formControl]="control"
+    [type]="inputType"
+    class="form-control"
+    [ngClass]="{ 'formControl-error': showErrors() }"
+  />
+
+  <div *ngIf="showErrors()">
+    <p *ngIf="control.errors.required">
+      <small class="form-text text-muted">Value is required</small>
+    </p>
+    <p *ngIf="control.errors.minlength">
+      <small class="form-text text-muted"
+        >Value you entered is
+        {{ control.errors.minlength.actualLength }} characters long but it must
+        be at least {{ control.errors.minlength.requiredLength }}</small
+      >
+    </p>
+    <p *ngIf="control.errors.maxlength">
+      <small class="form-text text-muted">
+        Value you entered is
+        {{ control.errors.maxlength.actualLength }} characters long but it
+        cannot be longer than {{ control.errors.maxlength.requiredLength }}
+      </small>
+    </p>
+    <p *ngIf="control.errors.pattern">
+      <small class="form-text text-muted">
+        Invalid format. {{ patternMatchMessage }}
+      </small>
+    </p>
+  </div>
+</div>
