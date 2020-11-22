@@ -104,4 +104,4 @@ dist
 .tern-port
 src/environments/environment.prod.ts
 src/environments/environment.dev.ts
-auth_config*.json
+# auth_config*.json
