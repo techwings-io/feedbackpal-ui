@@ -64,13 +64,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "feedbackpal-ui-gen:build",
-            "proxyConfig": "src/proxy.config.json"
+            "browserTarget": "feedbackpal-ui-gen:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "feedbackpal-ui-gen:build:production",
-              "proxyConfig": "src/proxy.config.json"
+              "browserTarget": "feedbackpal-ui-gen:build:production"
             }
           }
         },

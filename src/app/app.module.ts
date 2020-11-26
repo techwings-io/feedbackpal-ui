@@ -19,6 +19,8 @@ import { LogoutButtonComponent } from './header/logout-button/logout-button.comp
 
 import { ProfileComponent } from './profile/profile/profile.component';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,7 @@ import { ProfileComponent } from './profile/profile/profile.component';
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
-        allowedList: ['/api/*'],
+        allowedList: [`${environment.api.serverUrl}/*`],
       },
     }),
     BrowserAnimationsModule,

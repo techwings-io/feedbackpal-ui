@@ -3,6 +3,8 @@ import { FeedbackEventsService } from '../shared/services/feedback-events.servic
 import { FeedbackEvent } from '../shared/model/feedback-events.model';
 import { Router } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,6 +22,7 @@ export class HomeComponent implements OnInit {
     this.feedbackEventsService.getFeedbackEvents().subscribe((data) => {
       this.feedbackEvents = data;
     });
+    console.log('Backend API url', environment.api.serverUrl);
   }
 
   areThereFeedbackEvents(): boolean {
