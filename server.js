@@ -4,11 +4,11 @@ const app = express();
 const port = process.env.PORT || 4200;
 
 // Serve static files....
-app.use(express.static(__dirname + '/dist/feedbackpal-gen-ui'));
+app.use(express.static(__dirname + '/dist/feedbackpal-ui-gen'));
 
 // Send all requests to index.html
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/feedbackpal-gen-ui/index.html'));
+  res.sendFile(path.join(__dirname + '/dist/feedbackpal-ui-gen/index.html'));
 });
 
 // default Heroku PORT
