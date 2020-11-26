@@ -2,5 +2,5 @@
   "domain": "techwings.eu.auth0.com",
   "clientId": "Ty2swe1z60RBpOnTB4ZVN3GEZ1vYBdPf",
   "audience": "https://api.feedbackpal.techwings.io",
-  "serverUrl": "http://localhost:3000"
+  "serverUrl": "https://feedbackpal-api.herokuapp.com/"
 }
