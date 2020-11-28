@@ -1,7 +1,8 @@
 export interface FeedbackEvent {
-  name: string;
+  eventName: string;
   description: string;
   createdBy: string;
+  email: string;
   validFrom: Date;
   validTo: Date;
 }

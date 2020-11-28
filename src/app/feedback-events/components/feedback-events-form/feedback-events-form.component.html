@@ -2,7 +2,7 @@
   <div class="col-md"></div>
   <div class="col-md">
     <h1 class="text-center mb-3">Create a Feedback event</h1>
-    <form [formGroup]="feedbackEventsForm">
+    <form [formGroup]="feedbackEventsForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <app-input
           [control]="feedbackEventsForm.get('eventName')"
@@ -49,7 +49,7 @@
       <button
         type="submit"
         class="btn btn-primary mt-3"
-        [disabled]="!feedbackEventsForm.valid"
+        [disabled]="feedbackEventsForm.invalid"
       >
         Submit
       </button>

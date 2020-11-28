@@ -12,6 +12,10 @@ export class FeedbackEventsService {
 
   constructor(private http: HttpClient) {}
 
+  createFeedbackEvent(feedbackEvent: FeedbackEvent): Observable<FeedbackEvent> {
+    return this.http.post<FeedbackEvent>(this.apiUrl, feedbackEvent);
+  }
+
   getFeedbackEvents(): Observable<FeedbackEvent[]> {
     console.log('URL to API', this.apiUrl);
 
