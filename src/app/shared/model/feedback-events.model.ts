@@ -3,6 +3,7 @@ export interface FeedbackEvent {
   description: string;
   createdBy: string;
   email: string;
+  publicEvent: boolean;
   validFrom: Date;
   validTo: Date;
 }

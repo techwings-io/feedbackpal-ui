@@ -8,9 +8,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FeedbackEventsRoutingModule } from './feedback-events-routing.module';
 import { FeedbackEventsFormComponent } from './components/feedback-events-form/feedback-events-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { FeedbackEventsHomeComponent } from './components/feedback-events-home/feedback-events-home.component';
 
 @NgModule({
-  declarations: [FeedbackEventsFormComponent],
+  declarations: [FeedbackEventsFormComponent, FeedbackEventsHomeComponent],
   imports: [
     CommonModule,
     FeedbackEventsRoutingModule,

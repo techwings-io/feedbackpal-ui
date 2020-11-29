@@ -14,7 +14,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'createFeedbackEvent',
+    path: 'feedbackEventsHome',
     loadChildren: () =>
       import('./feedback-events/feedback-events.module').then(
         (m) => m.FeedbackEventsModule
@@ -29,7 +29,6 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: '**',

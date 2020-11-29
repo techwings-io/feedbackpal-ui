@@ -1,18 +1,19 @@
-<div class="row mt-3">
-  <div class="col-md"></div>
-  <div class="col-md">
-    <h1 class="text-center">Welcome to Feedback Pal</h1>
-  </div>
-  <div class="col-md"></div>
-</div>
+<div class="container">
+  <div class="jumbotron text-center mx-4">
+    <h1 class="display-4">Welcome to Feedback Pal</h1>
+    <p class="lead">Explore The Power of Constructive Feedback</p>
 
-<div class="row" *ngIf="!areThereFeedbackEvents()">
-  <div class="col-md"></div>
-  <div class="col-md text-center">
-    <p>It appears there are no events to leave feedback on</p>
-    <button class="btn btn-success btn-block" (click)="createFeedbackEvent()">
-      Create an event
+    <hr class="my-2" />
+    <img src="../../assets/images/feedbackpal.png" width="50%" class="mt-5" />
+    <hr class="my-4" />
+    <h2 class="text-center">What is Feedback Pal?</h2>
+    <p>
+      Feedback Pal is an application that allows users to provide feedback for
+      events. Events can be of any type, e.g. meetings, company-wide events,
+      etc. To get started, select an event and leave your feedback.
+    </p>
+    <button class="btn btn-success" (click)="visitFeedbackEventsHome()">
+      Get Started
     </button>
   </div>
-  <div class="col-md"></div>
 </div>

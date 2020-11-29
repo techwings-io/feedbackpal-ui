@@ -3,49 +3,59 @@
   <div class="col-md">
     <h1 class="text-center mb-3">Create a Feedback event</h1>
     <form [formGroup]="feedbackEventsForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <app-input
-          [control]="feedbackEventsForm.get('eventName')"
-          [label]="'Provide the name for your event *'"
-          [inputType]="'text'"
-        ></app-input>
-        <app-input
-          [control]="feedbackEventsForm.get('description')"
-          [label]="'Provide the description for your event *'"
-          [inputType]="'text'"
-        ></app-input>
-        <mat-form-field>
-          <label for="validFrom"></label>
-          <input
-            matInput
-            [matDatepicker]="validFromPicker"
-            placeholder="Event valid from"
-            formControlName="validFrom"
-            required
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="validFromPicker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #validFromPicker></mat-datepicker>
-        </mat-form-field>
-        <div class="mx-2"></div>
-        <mat-form-field>
-          <label for="validTo"></label>
-          <input
-            matInput
-            [matDatepicker]="validToPicker"
-            placeholder="Event valid until"
-            formControlName="validTo"
-            required
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="validToPicker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #validToPicker></mat-datepicker>
-        </mat-form-field>
+      <app-input
+        [control]="feedbackEventsForm.get('eventName')"
+        [label]="'Provide the name for your event *'"
+        [inputType]="'text'"
+      ></app-input>
+      <app-input
+        [control]="feedbackEventsForm.get('description')"
+        [label]="'Provide the description for your event *'"
+        [inputType]="'text'"
+      ></app-input>
+      <div class="form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [formControl]="feedbackEventsForm.get('publicEvent')"
+          id="publicEvent"
+        />
+        <label for="publicEvent"
+          >Do you want to make this event public? (Defaults to private)</label
+        >
       </div>
+      <mat-form-field>
+        <label for="validFrom"></label>
+        <input
+          matInput
+          [matDatepicker]="validFromPicker"
+          placeholder="Event valid from"
+          formControlName="validFrom"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="validFromPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #validFromPicker></mat-datepicker>
+      </mat-form-field>
+      <div class="mx-2"></div>
+      <mat-form-field>
+        <label for="validTo"></label>
+        <input
+          matInput
+          [matDatepicker]="validToPicker"
+          placeholder="Event valid until"
+          formControlName="validTo"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="validToPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #validToPicker></mat-datepicker>
+      </mat-form-field>
+      <div class="mx-2"></div>
       <button
         type="submit"
         class="btn btn-primary mt-3"
