@@ -7,9 +7,8 @@
   <div class="row">
     <div class="col-md"></div>
     <div class="col-md">
-      <h4 *ngIf="[selectedEvent]">
-        You are providing feedback for event: {{ selectedEvent.eventName }}
-      </h4>
+      <h4 *ngIf="[selectedEvent]">You are providing feedback for event:</h4>
+      <p class="text-center">{{ selectedEvent.eventName }}</p>
     </div>
     <div class="col-md"></div>
   </div>
@@ -21,8 +20,4 @@
       ></app-smiley-card>
     </div>
   </div>
-</div>
-
-<div>
-  {{ selectedEvent | json }}
 </div>

@@ -21,8 +21,6 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   triggerFeedback() {
     this.feedbackUiService.eventSelected(this.feedbackEvent);
-    console.log('Redirecting');
-    console.log('eventId', this.feedbackEvent.id);
 
     this.router.navigate(['/feedback'], {
       queryParams: { eventId: this.feedbackEvent.id },
