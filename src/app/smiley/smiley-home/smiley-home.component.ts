@@ -1,12 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
 import { Feeling, Smiley } from '../model/smiley.model';
+import { FeedbackUiService } from '../../shared/services/feedback-ui.service';
+import { Subscription, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-smiley-home',
   templateUrl: './smiley-home.component.html',
   styleUrls: ['./smiley-home.component.scss'],
 })
-export class SmileyHomeComponent implements OnInit {
+export class SmileyHomeComponent implements OnInit, OnDestroy {
+  @Input()
+  selectedEvent: FeedbackEvent;
+
+  private eventId: string;
+
+  subcriptionProcessed: Promise<boolean>;
+
+  eventSubscription$: Subscription;
+
+  constructor(
+    private feedbackUiService: FeedbackUiService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.eventSubscription$ = this.feedbackUiService.feedbackEventSelected$.subscribe(
+      (event) => {
+        console.log('event', event);
+
+        this.selectedEvent = event;
+      }
+    );
+  }
+
   smileys: Smiley[] = [
     {
       id: '1',
@@ -37,7 +63,22 @@ export class SmileyHomeComponent implements OnInit {
     console.log('App selected smiley', smiley);
   }
 
-  constructor() {}
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      console.log('Parmas', params);
 
-  ngOnInit(): void {}
+      const eventId = params.get('eventId');
+      if (!eventId) {
+        throw new Error('the eventId parameter is required');
+      }
+      this.eventId = eventId;
+      if (!this.selectedEvent) {
+        this.selectedEvent = this.feedbackUiService.getCachedEventById(eventId);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.eventSubscription$.unsubscribe();
+  }
 }

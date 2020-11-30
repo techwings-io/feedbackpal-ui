@@ -1,1 +1,26 @@
-<p>feedback-events-home works!</p>
+<div class="container">
+  <div class="row mt-5 text-center">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <h1>Select your event</h1>
+    </div>
+    <div class="col-md"></div>
+  </div>
+  <div class="row text-center" *ngIf="!areThereAnyFeedbackEvents()">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <p>
+        It appears you don't have any events. Click the button below to create a
+        new event to provide feedback.
+      </p>
+      <button class="btn btn-success btn-block">Create a new event</button>
+    </div>
+    <div class="col-md"></div>
+  </div>
+  <div class="row" *ngIf="areThereAnyFeedbackEvents()">
+    <app-feedback-event-detail
+      *ngFor="let feedbackEvent of feedbackEvents"
+      [feedbackEvent]="feedbackEvent"
+    ></app-feedback-event-detail>
+  </div>
+</div>

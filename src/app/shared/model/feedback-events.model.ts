@@ -1,4 +1,5 @@
 export interface FeedbackEvent {
+  id: string;
   eventName: string;
   description: string;
   createdBy: string;

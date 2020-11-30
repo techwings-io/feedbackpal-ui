@@ -5,6 +5,15 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <h4 *ngIf="[selectedEvent]">
+        You are providing feedback for event: {{ selectedEvent.eventName }}
+      </h4>
+    </div>
+    <div class="col-md"></div>
+  </div>
+  <div class="row">
     <div class="col-md-4 mt-5" *ngFor="let smiley of smileys">
       <app-smiley-card
         [smiley]="smiley"
@@ -12,4 +21,8 @@
       ></app-smiley-card>
     </div>
   </div>
+</div>
+
+<div>
+  {{ selectedEvent | json }}
 </div>

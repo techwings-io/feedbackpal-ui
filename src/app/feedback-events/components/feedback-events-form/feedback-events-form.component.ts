@@ -56,6 +56,7 @@ export class FeedbackEventsFormComponent implements OnInit {
     } = this.feedbackEventsForm.value;
 
     const feedbackEvent: FeedbackEvent = {
+      id: '',
       eventName,
       description,
       createdBy: this.userProfile.sub,

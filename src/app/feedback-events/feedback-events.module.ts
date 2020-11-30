@@ -9,9 +9,10 @@ import { FeedbackEventsRoutingModule } from './feedback-events-routing.module';
 import { FeedbackEventsFormComponent } from './components/feedback-events-form/feedback-events-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { FeedbackEventsHomeComponent } from './components/feedback-events-home/feedback-events-home.component';
+import { FeedbackEventDetailComponent } from './components/feedback-events-home/feedback-event-detail/feedback-event-detail.component';
 
 @NgModule({
-  declarations: [FeedbackEventsFormComponent, FeedbackEventsHomeComponent],
+  declarations: [FeedbackEventsFormComponent, FeedbackEventsHomeComponent, FeedbackEventDetailComponent],
   imports: [
     CommonModule,
     FeedbackEventsRoutingModule,
