@@ -19,25 +19,34 @@ export class SmileyCardComponent implements OnInit {
   @Input()
   smiley: Smiley;
 
+  displayTellUsMoreTextArea = false;
+
+  @ViewChild('tellUsMoreTextArea')
+  textAreaEl: ElementRef;
+
+  tellUsMoreText: string;
+
   highlighted = false;
-
-  @Output()
-  selectedSmiley = new EventEmitter<Smiley>();
-
-  @ViewChild('displayForm')
-  displayForm: ElementRef;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onSmileySelected() {
-    console.log(this.displayForm.nativeElement.checked);
-
-    this.selectedSmiley.emit(this.smiley);
+  onTellUsMore() {
+    this.displayTellUsMoreTextArea = true;
   }
 
   onMouseEvent(event) {
     this.highlighted = event.type === 'mouseover' ? true : false;
+  }
+
+  onTextEntered(event: KeyboardEvent) {
+    this.tellUsMoreText += event.key;
+  }
+
+  onSubmitFeedback(event) {
+    this.tellUsMoreText = this.textAreaEl.nativeElement.value;
+
+    //TODO To submit the feedback to the API
   }
 }

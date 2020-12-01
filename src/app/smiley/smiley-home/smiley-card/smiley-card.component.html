@@ -11,17 +11,34 @@
     </h4>
     <p class="text-center">
       Want to tell us more?
-      <span><input name="displayForm" type="checkbox" #displayForm /></span>
+      <span
+        ><input name="displayForm" type="checkbox" (click)="onTellUsMore()"
+      /></span>
     </p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md"></div>
+        <div class="col-md">
+          <textarea
+            *ngIf="displayTellUsMoreTextArea"
+            (change)="onTextEntered($event)"
+            #tellUsMoreTextArea
+          ></textarea>
+        </div>
+        <div class="col-md"></div>
+      </div>
+    </div>
+
     <p class="card-body">
       {{ smiley.cardText }}
     </p>
     <button
       type="button"
       class="btn btn-primary btn-block"
-      (click)="onSmileySelected()"
+      (click)="onSubmitFeedback($event)"
     >
       Send Feedback
     </button>
+    {{ [tellUsMoreText] }}
   </div>
 </div>

@@ -6,18 +6,15 @@
   </div>
   <div class="row">
     <div class="col-md"></div>
-    <div class="col-md">
-      <h4 *ngIf="[selectedEvent]">You are providing feedback for event:</h4>
+    <div class="col-md" *ngIf="selectedEvent">
+      <h4>You are providing feedback for event:</h4>
       <p class="text-center">{{ selectedEvent.eventName }}</p>
     </div>
     <div class="col-md"></div>
   </div>
   <div class="row">
     <div class="col-md-4 mt-5" *ngFor="let smiley of smileys">
-      <app-smiley-card
-        [smiley]="smiley"
-        (selectedSmiley)="onSelectedSmiley($event)"
-      ></app-smiley-card>
+      <app-smiley-card [smiley]="smiley"></app-smiley-card>
     </div>
   </div>
 </div>
