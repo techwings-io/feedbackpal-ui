@@ -21,7 +21,6 @@
         <div class="col-md">
           <textarea
             *ngIf="displayTellUsMoreTextArea"
-            (change)="onTextEntered($event)"
             #tellUsMoreTextArea
           ></textarea>
         </div>
@@ -39,6 +38,5 @@
     >
       Send Feedback
     </button>
-    {{ [tellUsMoreText] }}
   </div>
 </div>
