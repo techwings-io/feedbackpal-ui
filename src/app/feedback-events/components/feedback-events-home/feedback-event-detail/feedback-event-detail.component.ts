@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
-import { FeedbackUiService } from '../../../../shared/services/feedback-ui.service';
 
 @Component({
   selector: 'app-feedback-event-detail',
@@ -12,19 +11,7 @@ export class FeedbackEventDetailComponent implements OnInit {
   @Input()
   feedbackEvent: FeedbackEvent;
 
-  constructor(
-    private router: Router,
-    private feedbackUiService: FeedbackUiService
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
-
-  triggerFeedback() {
-    this.feedbackUiService.eventSelected(this.feedbackEvent);
-
-    this.router.navigate(['/feedback'], {
-      queryParams: { eventId: this.feedbackEvent.id },
-      queryParamsHandling: 'merge',
-    });
-  }
 }

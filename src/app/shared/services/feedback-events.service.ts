@@ -21,4 +21,9 @@ export class FeedbackEventsService {
 
     return this.http.get<FeedbackEvent[]>(this.apiUrl);
   }
+
+  getFeedbackEventsById(eventId: string): Observable<FeedbackEvent | null> {
+    const url = `${this.apiUrl}/${eventId}`;
+    return this.http.get<FeedbackEvent>(url);
+  }
 }

@@ -4,6 +4,8 @@ import { FeedbackEventsService } from '../../../shared/services/feedback-events.
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-feedback-events-home',
   templateUrl: './feedback-events-home.component.html',
@@ -12,7 +14,10 @@ import { of } from 'rxjs';
 export class FeedbackEventsHomeComponent implements OnInit {
   feedbackEvents: FeedbackEvent[] = [];
 
-  constructor(private feedbackEventsService: FeedbackEventsService) {}
+  constructor(
+    private feedbackEventsService: FeedbackEventsService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const $http = this.feedbackEventsService.getFeedbackEvents();
@@ -30,5 +35,9 @@ export class FeedbackEventsHomeComponent implements OnInit {
 
   areThereAnyFeedbackEvents(): boolean {
     return this.feedbackEvents.length > 0;
+  }
+
+  displayCreateEventForm(): void {
+    this.router.navigate(['feedbackEventsHome', 'createFeedbackEvent']);
   }
 }

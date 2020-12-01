@@ -1,9 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
 import { Feeling, Smiley } from '../model/smiley.model';
-import { FeedbackUiService } from '../../shared/services/feedback-ui.service';
-import { Subscription, Observable } from 'rxjs';
+
 import { ActivatedRoute } from '@angular/router';
+import { FeedbackEventsService } from '../../shared/services/feedback-events.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-smiley-home',
@@ -16,22 +17,14 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
 
   private eventId: string;
 
+  private errorOccurred = false;
+
   subcriptionProcessed: Promise<boolean>;
 
-  eventSubscription$: Subscription;
-
   constructor(
-    private feedbackUiService: FeedbackUiService,
+    private feedbackEventsService: FeedbackEventsService,
     private activatedRoute: ActivatedRoute
-  ) {
-    this.eventSubscription$ = this.feedbackUiService.feedbackEventSelected$.subscribe(
-      (event) => {
-        console.log('event', event);
-
-        this.selectedEvent = event;
-      }
-    );
-  }
+  ) {}
 
   smileys: Smiley[] = [
     {
@@ -65,20 +58,28 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
-      console.log('Parmas', params);
-
       const eventId = params.get('eventId');
       if (!eventId) {
         throw new Error('the eventId parameter is required');
       }
       this.eventId = eventId;
-      if (!this.selectedEvent) {
-        this.selectedEvent = this.feedbackUiService.getCachedEventById(eventId);
-      }
+      this.feedbackEventsService
+        .getFeedbackEventsById(eventId)
+        .pipe(
+          catchError((err) => {
+            console.log(
+              `An error occurred while retrieving event id: ${eventId}. ${err}`
+            );
+            this.errorOccurred = true;
+            return null;
+          })
+        )
+        .subscribe((feedbackEvent: FeedbackEvent) => {
+          this.selectedEvent = feedbackEvent;
+          this.errorOccurred = false;
+        });
     });
   }
 
-  ngOnDestroy(): void {
-    this.eventSubscription$.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }
