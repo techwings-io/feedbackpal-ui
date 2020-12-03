@@ -1,0 +1,10 @@
+<div class="form-group mt-3">
+  <label for="userName">Select users to share this event with</label>
+  <input
+    (input)="onUsernameChange($event.target.value)"
+    type="text"
+    id="userName"
+    class="form-control"
+    #usernameToSearch
+  />
+</div>

@@ -12,7 +12,11 @@ import { FeedbackEventsHomeComponent } from './components/feedback-events-home/f
 import { FeedbackEventDetailComponent } from './components/feedback-events-home/feedback-event-detail/feedback-event-detail.component';
 
 @NgModule({
-  declarations: [FeedbackEventsFormComponent, FeedbackEventsHomeComponent, FeedbackEventDetailComponent],
+  declarations: [
+    FeedbackEventsFormComponent,
+    FeedbackEventsHomeComponent,
+    FeedbackEventDetailComponent,
+  ],
   imports: [
     CommonModule,
     FeedbackEventsRoutingModule,

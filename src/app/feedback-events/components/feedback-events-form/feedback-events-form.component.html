@@ -14,15 +14,19 @@
         [inputType]="'text'"
       ></app-input>
       <div class="form-check">
+        <label for="publicEvent"
+          >Do you want to make this event public? (Defaults to private)</label
+        >
         <input
           type="checkbox"
+          (change)="onShareClick($event)"
           class="form-check-input"
           [formControl]="feedbackEventsForm.get('publicEvent')"
           id="publicEvent"
         />
-        <label for="publicEvent"
-          >Do you want to make this event public? (Defaults to private)</label
-        >
+      </div>
+      <div *ngIf="shareWithOthers">
+        <app-user-search></app-user-search>
       </div>
       <mat-form-field>
         <label for="validFrom"></label>
@@ -55,6 +59,7 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #validToPicker></mat-datepicker>
       </mat-form-field>
+
       <div class="mx-2"></div>
       <button
         type="submit"

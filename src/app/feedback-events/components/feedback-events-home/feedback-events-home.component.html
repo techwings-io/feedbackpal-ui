@@ -4,7 +4,14 @@
     <div class="col-md">
       <h1>Select your event</h1>
     </div>
-    <div class="col-md"></div>
+    <div class="col-md">
+      <button
+        class="btn btn-success btn-block"
+        (click)="displayCreateEventForm()"
+      >
+        Create a new event
+      </button>
+    </div>
   </div>
   <div class="row text-center" *ngIf="!areThereAnyFeedbackEvents()">
     <div class="col-md"></div>

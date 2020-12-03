@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { utcDateValidator } from '../../../shared/validators/utc.date.validator'
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { Auth0Profile } from '../../../shared/model/auth0.profile';
 import { throwError } from 'rxjs';
+import { UserSearchService } from '../../../shared/services/user-search.service';
 
 @Component({
   selector: 'app-feedback-events-form',
@@ -16,6 +17,8 @@ import { throwError } from 'rxjs';
 export class FeedbackEventsFormComponent implements OnInit {
   userProfile: Auth0Profile = { sub: '', email: '' };
   formSubmitted = false;
+
+  shareWithOthers = true;
 
   feedbackEventsForm = new FormGroup({
     eventName: new FormControl('', [
@@ -33,7 +36,8 @@ export class FeedbackEventsFormComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private feedbackEventsService: FeedbackEventsService
+    private feedbackEventsService: FeedbackEventsService,
+    private userSearchService: UserSearchService
   ) {}
 
   ngOnInit(): void {
@@ -83,5 +87,11 @@ export class FeedbackEventsFormComponent implements OnInit {
         },
         (err) => console.error(err)
       );
+  }
+
+  onShareClick(event) {
+    console.log('Shared with others', this.shareWithOthers);
+
+    this.shareWithOthers = !this.shareWithOthers;
   }
 }
