@@ -1,21 +1,58 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserSearchService } from '../services/user-search.service';
 import { Auth0UserModel } from '../model/auth0.user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-search',
   templateUrl: './user-search.component.html',
   styleUrls: ['./user-search.component.scss'],
 })
-export class UserSearchComponent implements OnInit {
+export class UserSearchComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
 
   candidateUsersToShareWith: Auth0UserModel[] = [];
 
-  constructor(private userSearchService: UserSearchService) {}
+  selectedUsersToShareWith: Auth0UserModel[] = [];
+
+  selectedUsersToShareWith$: Subscription;
+  deSelectedUsersToShareWith$: Subscription;
+
+  constructor(private userSearchService: UserSearchService) {
+    this.selectedUsersToShareWith$ = this.userSearchService.userToShareWithSelected$.subscribe(
+      (user) => {
+        this.selectedUsersToShareWith.push(user);
+      }
+    );
+
+    this.deSelectedUsersToShareWith$ = this.userSearchService.userToShareWithDeselected$.subscribe(
+      (deselectedUser) => {
+        this.selectedUsersToShareWith = this.selectedUsersToShareWith.filter(
+          (user) => {
+            return user.user_id !== deselectedUser.user_id;
+          }
+        );
+      }
+    );
+  }
 
   ngOnInit(): void {}
+
+  ngOnDestroy() {
+    if (this.selectedUsersToShareWith$) {
+      this.selectedUsersToShareWith$.unsubscribe();
+    }
+    if (this.deSelectedUsersToShareWith$) {
+      this.deSelectedUsersToShareWith$.unsubscribe();
+    }
+  }
 
   onUsernameChange(event) {
     this.searchTerm = event;

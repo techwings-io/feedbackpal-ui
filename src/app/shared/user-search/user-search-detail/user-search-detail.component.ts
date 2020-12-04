@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Auth0UserModel } from '../../model/auth0.user.model';
+import { UserSearchService } from '../../services/user-search.service';
 
 @Component({
   selector: 'app-user-search-detail',
@@ -10,7 +11,15 @@ export class UserSearchDetailComponent implements OnInit {
   @Input()
   candidateUser: Auth0UserModel;
 
-  constructor() {}
+  selected = false;
+
+  constructor(private userSearchService: UserSearchService) {}
 
   ngOnInit(): void {}
+
+  onUserSelected(event) {
+    event.preventDefault();
+    this.selected = true;
+    this.userSearchService.userToShareWithSelected(this.candidateUser);
+  }
 }

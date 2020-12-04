@@ -1,4 +1,4 @@
-<div class="card mt-1">
+<div class="card mt-1" *ngIf="!selected">
   <div class="card-header">User Details</div>
   <div class="card-body">
     <h5 class="card-title">{{ candidateUser.name }}</h5>
@@ -13,7 +13,13 @@
         </div>
         <div class="col-md">
           <p class="card-text"></p>
-          <a href="#" class="btn btn-primary">Share</a>
+          <button
+            class="btn btn-primary"
+            (click)="onUserSelected($event)"
+            [disabled]="selected"
+          >
+            Share
+          </button>
         </div>
         <div class="col-md"></div>
       </div>

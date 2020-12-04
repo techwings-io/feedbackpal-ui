@@ -8,6 +8,18 @@
   />
 </div>
 
+<div
+  class="container"
+  *ngIf="selectedUsersToShareWith && selectedUsersToShareWith.length > 0"
+>
+  <div>{{ selectedUsersToShareWith.length }}</div>
+  <div class="row" *ngFor="let selectedUser of selectedUsersToShareWith">
+    <app-selected-users-to-share-with
+      [userToShareWith]="selectedUser"
+    ></app-selected-users-to-share-with>
+  </div>
+</div>
+
 <div class="container" *ngIf="candidateUsersToShareWith">
   <div class="row" *ngFor="let user of candidateUsersToShareWith">
     <app-user-search-detail [candidateUser]="user"></app-user-search-detail>
