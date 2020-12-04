@@ -13,10 +13,12 @@ export class UserSearchService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(userName: string): Observable<Auth0UserModel[]> {
+  async getUsers(userName: string): Promise<Auth0UserModel[]> {
     const params: HttpParams = new HttpParams().set('userName', userName);
-    return this.http.get<Auth0UserModel[]>(this.apiUrl, {
-      params,
-    });
+    return await this.http
+      .get<Auth0UserModel[]>(this.apiUrl, {
+        params,
+      })
+      .toPromise();
   }
 }

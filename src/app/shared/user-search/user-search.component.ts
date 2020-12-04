@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { UserSearchService } from '../services/user-search.service';
+import { Auth0UserModel } from '../model/auth0.user.model';
 
 @Component({
   selector: 'app-user-search',
@@ -9,6 +10,8 @@ import { UserSearchService } from '../services/user-search.service';
 })
 export class UserSearchComponent implements OnInit {
   searchTerm: string = '';
+
+  candidateUsersToShareWith: Auth0UserModel[] = [];
 
   constructor(private userSearchService: UserSearchService) {}
 
@@ -19,7 +22,10 @@ export class UserSearchComponent implements OnInit {
     if (this.searchTerm.length > 2) {
       return this.userSearchService
         .getUsers(this.searchTerm)
-        .subscribe((data) => console.log(data));
+        .then((users) => {
+          this.candidateUsersToShareWith = users;
+        })
+        .catch((err) => console.log(err));
     }
   }
 }

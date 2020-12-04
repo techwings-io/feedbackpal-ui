@@ -4,8 +4,9 @@ import { InputComponent } from './input/input.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserSearchComponent } from './user-search/user-search.component';
+import { UserSearchDetailComponent } from './user-search/user-search-detail/user-search-detail.component';
 @NgModule({
-  declarations: [InputComponent, UserSearchComponent],
+  declarations: [InputComponent, UserSearchComponent, UserSearchDetailComponent],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [InputComponent, UserSearchComponent],
 })

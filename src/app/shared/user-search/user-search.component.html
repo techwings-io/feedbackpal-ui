@@ -5,6 +5,11 @@
     type="text"
     id="userName"
     class="form-control"
-    #usernameToSearch
   />
+</div>
+
+<div class="container" *ngIf="candidateUsersToShareWith">
+  <div class="row" *ngFor="let user of candidateUsersToShareWith">
+    <app-user-search-detail [candidateUser]="user"></app-user-search-detail>
+  </div>
 </div>
