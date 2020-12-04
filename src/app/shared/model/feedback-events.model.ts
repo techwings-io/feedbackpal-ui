@@ -5,6 +5,7 @@ export interface FeedbackEvent {
   createdBy: string;
   email: string;
   publicEvent: boolean;
+  usersToShareWith: string[];
   validFrom: Date;
   validTo: Date;
 }

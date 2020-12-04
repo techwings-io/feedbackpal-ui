@@ -13,9 +13,11 @@ export class UserSearchService {
 
   private userToShareWithSelectedSource = new Subject<Auth0UserModel>();
   private userToShareWithDeselectedSource = new Subject<Auth0UserModel>();
+  private usersToShareWithSource = new Subject<Auth0UserModel[]>();
 
   userToShareWithSelected$ = this.userToShareWithSelectedSource.asObservable();
   userToShareWithDeselected$ = this.userToShareWithDeselectedSource.asObservable();
+  usersToShareWith$ = this.usersToShareWithSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -34,5 +36,9 @@ export class UserSearchService {
 
   userToShareWithDeselected(user: Auth0UserModel) {
     this.userToShareWithDeselectedSource.next(user);
+  }
+
+  broadcastUsersToShareWith(users: Auth0UserModel[]) {
+    this.usersToShareWithSource.next(users);
   }
 }

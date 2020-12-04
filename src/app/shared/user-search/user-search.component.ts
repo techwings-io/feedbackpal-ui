@@ -29,6 +29,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     this.selectedUsersToShareWith$ = this.userSearchService.userToShareWithSelected$.subscribe(
       (user) => {
         this.selectedUsersToShareWith.push(user);
+        this.broadcastSelectedUsers();
       }
     );
 
@@ -39,6 +40,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
             return user.user_id !== deselectedUser.user_id;
           }
         );
+        this.broadcastSelectedUsers();
       }
     );
   }
@@ -64,5 +66,11 @@ export class UserSearchComponent implements OnInit, OnDestroy {
         })
         .catch((err) => console.log(err));
     }
+  }
+
+  private broadcastSelectedUsers(): void {
+    this.userSearchService.broadcastUsersToShareWith(
+      this.selectedUsersToShareWith
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError } from 'rxjs/operators';
@@ -6,19 +6,23 @@ import { FeedbackEventsService } from '../../../shared/services/feedback-events.
 import { utcDateValidator } from '../../../shared/validators/utc.date.validator';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { Auth0Profile } from '../../../shared/model/auth0.profile';
-import { throwError } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
+import { Auth0UserModel } from '../../../shared/model/auth0.user.model';
 
 @Component({
   selector: 'app-feedback-events-form',
   templateUrl: './feedback-events-form.component.html',
   styleUrls: ['./feedback-events-form.component.scss'],
 })
-export class FeedbackEventsFormComponent implements OnInit {
+export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   userProfile: Auth0Profile = { sub: '', email: '' };
   formSubmitted = false;
 
   shareWithOthers = true;
+
+  usersToShareWith: Auth0UserModel[];
+  usersToShareWith$: Subscription;
 
   feedbackEventsForm = new FormGroup({
     eventName: new FormControl('', [
@@ -38,7 +42,15 @@ export class FeedbackEventsFormComponent implements OnInit {
     private auth: AuthService,
     private feedbackEventsService: FeedbackEventsService,
     private userSearchService: UserSearchService
-  ) {}
+  ) {
+    this.usersToShareWith$ = this.userSearchService.usersToShareWith$.subscribe(
+      (users) => {
+        console.log('Received feedback event', users);
+
+        this.usersToShareWith = users;
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.auth.user$.subscribe((profile: Auth0Profile) => {
@@ -47,6 +59,12 @@ export class FeedbackEventsFormComponent implements OnInit {
       this.userProfile.sub = sub;
       this.userProfile.email = email;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.usersToShareWith$) {
+      this.usersToShareWith$.unsubscribe();
+    }
   }
 
   onSubmit() {
@@ -66,6 +84,9 @@ export class FeedbackEventsFormComponent implements OnInit {
       createdBy: this.userProfile.sub,
       email: this.userProfile.email,
       publicEvent,
+      usersToShareWith: this.usersToShareWith.map((user) => {
+        return user.user_id;
+      }),
       validFrom,
       validTo,
     };
@@ -90,8 +111,6 @@ export class FeedbackEventsFormComponent implements OnInit {
   }
 
   onShareClick(event) {
-    console.log('Shared with others', this.shareWithOthers);
-
     this.shareWithOthers = !this.shareWithOthers;
   }
 }

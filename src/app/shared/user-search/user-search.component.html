@@ -12,7 +12,6 @@
   class="container"
   *ngIf="selectedUsersToShareWith && selectedUsersToShareWith.length > 0"
 >
-  <div>{{ selectedUsersToShareWith.length }}</div>
   <div class="row" *ngFor="let selectedUser of selectedUsersToShareWith">
     <app-selected-users-to-share-with
       [userToShareWith]="selectedUser"
