@@ -14,4 +14,13 @@ export class FeedbackEventDetailComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  onEventSelected(event) {
+    event.preventDefault();
+
+    this.router.navigate(['/feedback'], {
+      queryParams: { eventId: this.feedbackEvent.id },
+      queryParamsHandling: 'merge',
+    });
+  }
 }

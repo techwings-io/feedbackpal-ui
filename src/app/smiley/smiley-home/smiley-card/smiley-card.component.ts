@@ -33,7 +33,7 @@ export class SmileyCardComponent implements OnInit {
   ngOnInit(): void {}
 
   onTellUsMore() {
-    this.displayTellUsMoreTextArea = true;
+    this.displayTellUsMoreTextArea = !this.displayTellUsMoreTextArea;
   }
 
   onMouseEvent(event) {
