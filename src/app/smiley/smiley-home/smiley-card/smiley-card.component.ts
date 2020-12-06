@@ -33,6 +33,9 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   @Input()
   selectedEvent: FeedbackEvent;
 
+  @ViewChild('commentsArea')
+  commentsArea: ElementRef;
+
   displayTellUsMoreTextArea = false;
 
   @Input()
@@ -117,9 +120,9 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
         this.feedbackSubmittedSuccessfully = true;
         this.errorOccurred = false;
         this.feedbackSubmitted$.emit();
+        this.commentsArea.nativeElement.value = '';
         setTimeout(() => {
           this.feedbackSubmittedSuccessfully = false;
-          this.router.navigateByUrl('/feedbackEventsHome');
         }, 2000);
       })
       .catch((err) => {

@@ -33,23 +33,23 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
       id: '1',
       path: '../assets/images/glassy-smiley-red.png',
       cardTitle: 'Not Happy',
-      cardText:
-        'So you are not feeling happy. Would you like to leave a message?',
+      cardText: `So you are feeling not happy. The event's organiser has been informed.`,
       feeling: Feeling.ANGRY,
     },
     {
       id: '2',
       path: '../assets/images/glassy-smiley-amber.png',
       cardTitle: 'Neutral',
-      cardText:
-        'So you are feeling neutral. Would you like to leave a message?',
+      cardText: `You are feeling neutral. The event wasn't too bad after all?`,
       feeling: Feeling.NEUTRAL,
     },
     {
       id: '3',
       path: '../assets/images/glassy-smiley-green.png',
       cardTitle: 'Happy',
-      cardText: 'So you are feeling happy. Would you like to leave a message?',
+      cardText:
+        'You are feeling happy about this event. That is very nice to hear.',
+
       feeling: Feeling.HAPPY,
     },
   ];
