@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  EventEmitter,
-  Output,
   ViewChild,
   ElementRef,
   OnDestroy,
@@ -14,10 +12,11 @@ import { FeedbackService } from '../../../shared/services/feedback.service';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { SubmitFeedback } from '../../../shared/model/submit.feedback.model';
 import { AuthService } from '@auth0/auth0-angular';
-import { tap } from 'rxjs/operators';
+
 import { Subscription } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from 'src/app/shared/model/auth0.user.model';
+import { uuidv4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-smiley-card',
@@ -36,7 +35,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   @ViewChild('tellUsMoreTextArea')
   textAreaEl: ElementRef;
 
-  tellUsMoreText: string;
+  @Input()
+  tellUsMoreText: string = '';
 
   highlighted = false;
 
@@ -44,6 +44,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   deSelectedUsersToShareWith$: Subscription;
 
   selectedUsersToShareWith: Auth0UserModel[] = [];
+
+  feedbackSubmittedSuccessfully = false;
 
   @Input()
   createdBy: string;
@@ -90,15 +92,13 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
     this.highlighted = event.type === 'mouseover' ? true : false;
   }
 
-  onTextEntered(event: KeyboardEvent) {
-    this.tellUsMoreText += event.key;
-  }
-
   onSubmitFeedback(event) {
+    this.textAreaEl.nativeElement.value = '';
+
     console.log('selected event', this.selectedEvent);
 
     event.preventDefault();
-    this.tellUsMoreText = this.textAreaEl.nativeElement.value;
+
     const feedback: SubmitFeedback = {
       comments: this.tellUsMoreText,
       createdBy: this.createdBy,
@@ -107,6 +107,17 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       feeling: this.smiley.feeling,
     };
     console.log('feedback payload', feedback);
+    this.feedbackService
+      .storeFeedback(feedback)
+      .then((feedback) => {
+        this.feedbackSubmittedSuccessfully = true;
+        setInterval(() => {
+          this.feedbackSubmittedSuccessfully = false;
+        }, 2000);
+      })
+      .catch((err) => {
+        this.feedbackSubmittedSuccessfully = false;
+      });
   }
 
   private broadcastSelectedUsers(): void {
