@@ -72,22 +72,3 @@
   </div>
   <div class="col-md"></div>
 </div>
-
-<div class="mt-5">Form Contents: {{ feedbackEventsForm.value | json }}</div>
-<div>Form Valid: {{ feedbackEventsForm.valid }}</div>
-<div>
-  Errors around event name:
-  {{ feedbackEventsForm.controls.eventName.errors | json }}
-</div>
-<div>
-  Errors around event description:
-  {{ feedbackEventsForm.controls.description.errors | json }}
-</div>
-<div>
-  Errors around validFrom:
-  {{ feedbackEventsForm.controls.validFrom.errors | json }}
-</div>
-<div>
-  Errors around validTo:
-  {{ feedbackEventsForm.controls.validTo.errors | json }}
-</div>
