@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Auth0UserModel } from '../../model/auth0.user.model';
-import { UserSearchService } from '../../services/user-search.service';
+import { Auth0UserModel } from 'src/app/shared/model/auth0.user.model';
+import { UserSearchService } from 'src/app/shared/services/user-search.service';
 
 @Component({
   selector: 'app-user-search-detail',

@@ -9,6 +9,7 @@ import { Auth0Profile } from '../../../shared/model/auth0.profile';
 import { Subscription, throwError } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from '../../../shared/model/auth0.user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feedback-events-form',
@@ -41,7 +42,8 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private feedbackEventsService: FeedbackEventsService,
-    private userSearchService: UserSearchService
+    private userSearchService: UserSearchService,
+    private router: Router
   ) {
     this.usersToShareWith$ = this.userSearchService.usersToShareWith$.subscribe(
       (users) => {
@@ -108,6 +110,8 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
         },
         (err) => console.error(err)
       );
+    this.feedbackEventsForm.reset();
+    this.router.navigateByUrl('/feedbackEventsHome');
   }
 
   onShareClick(event) {

@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { FeedbackEventsService } from '../../../shared/services/feedback-events.service';
 import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class FeedbackEventsHomeComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error('An error occurred while retrieving events');
-          return of([]);
+          return throwError(err);
         })
       )
       .subscribe((feedbackEvents) => {

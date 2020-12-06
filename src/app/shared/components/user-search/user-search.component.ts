@@ -1,14 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { UserSearchService } from '../services/user-search.service';
-import { Auth0UserModel } from '../model/auth0.user.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+import { UserSearchService } from '../../services/user-search.service';
+import { Auth0UserModel } from '../../model/auth0.user.model';
 
 @Component({
   selector: 'app-user-search',

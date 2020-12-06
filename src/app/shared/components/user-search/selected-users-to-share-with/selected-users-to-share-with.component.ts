@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Auth0UserModel } from '../../model/auth0.user.model';
-import { UserSearchService } from '../../services/user-search.service';
+import { UserSearchService } from 'src/app/shared/services/user-search.service';
+import { Auth0UserModel } from '../../../model/auth0.user.model';
 
 @Component({
   selector: 'app-selected-users-to-share-with',
