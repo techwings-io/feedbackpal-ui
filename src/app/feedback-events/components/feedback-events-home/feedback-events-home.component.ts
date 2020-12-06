@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class FeedbackEventsHomeComponent implements OnInit {
   feedbackEvents: FeedbackEvent[] = [];
+  errorOccurred = false;
 
   constructor(
     private feedbackEventsService: FeedbackEventsService,
@@ -25,6 +26,7 @@ export class FeedbackEventsHomeComponent implements OnInit {
       .pipe(
         catchError((err) => {
           console.error('An error occurred while retrieving events');
+          this.errorOccurred = true;
           return throwError(err);
         })
       )

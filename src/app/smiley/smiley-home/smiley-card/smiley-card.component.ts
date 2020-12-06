@@ -46,6 +46,10 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   @Output()
   feedbackSubmitted$ = new EventEmitter<void>();
 
+  errorOccurred = false;
+  @Output()
+  errorOccurred$ = new EventEmitter<void>();
+
   selectedUsersToShareWith: Auth0UserModel[] = [];
 
   feedbackSubmittedSuccessfully = false;
@@ -97,8 +101,6 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   }
 
   onSubmitFeedback(event) {
-    console.log('selected event', this.selectedEvent);
-
     event.preventDefault();
 
     const feedback: SubmitFeedback = {
@@ -108,20 +110,26 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       lastCreated: new Date(),
       feeling: this.smiley.feeling,
     };
-    console.log('feedback payload', feedback);
+
     this.feedbackService
       .storeFeedback(feedback)
       .then((feedback) => {
         this.feedbackSubmittedSuccessfully = true;
+        this.errorOccurred = false;
         this.feedbackSubmitted$.emit();
         setTimeout(() => {
           this.feedbackSubmittedSuccessfully = false;
+          this.router.navigateByUrl('/feedbackEventsHome');
         }, 2000);
       })
       .catch((err) => {
         this.feedbackSubmittedSuccessfully = false;
+        this.errorOccurred = true;
+        setTimeout(() => {
+          this.errorOccurred = false;
+          this.errorOccurred$.emit();
+        }, 5000);
       });
-    this.router.navigateByUrl('/feedbackEventsHome');
   }
 
   private broadcastSelectedUsers(): void {

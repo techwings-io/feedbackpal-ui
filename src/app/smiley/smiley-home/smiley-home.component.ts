@@ -17,7 +17,7 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
 
   private eventId: string;
 
-  private errorOccurred = false;
+  errorOccurred = false;
 
   overallFeelingImgUrl = '';
 
@@ -88,6 +88,10 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
     console.log('Feedback was submitted');
 
     this.setOverallFeelingImgUrl();
+  }
+
+  errorOccurredWhileSubmitting() {
+    this.errorOccurred = true;
   }
 
   ngOnDestroy(): void {}
