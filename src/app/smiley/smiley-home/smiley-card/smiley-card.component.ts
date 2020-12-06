@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from 'src/app/shared/model/auth0.user.model';
 import { uuidv4 as uuid } from 'uuid';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-smiley-card',
@@ -55,7 +56,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   constructor(
     private feedbackService: FeedbackService,
     private authService: AuthService,
-    private userSearchService: UserSearchService
+    private userSearchService: UserSearchService,
+    private router: Router
   ) {
     this.selectedUsersToShareWith$ = this.userSearchService.userToShareWithSelected$.subscribe(
       (user) => {
@@ -119,6 +121,7 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       .catch((err) => {
         this.feedbackSubmittedSuccessfully = false;
       });
+    this.router.navigateByUrl('/feedbackEventsHome');
   }
 
   private broadcastSelectedUsers(): void {

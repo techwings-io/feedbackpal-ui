@@ -21,11 +21,7 @@ export class FeedbackEventDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.feedbackEventService
-      .getOverallFeelingImageUrl(this.feedbackEvent.id)
-      .then((imageUrl) => {
-        this.overallFeelingImgUrl = imageUrl;
-      });
+    this.retrieveOverallFeedbackImgUrl();
   }
 
   onEventSelected(event) {
@@ -35,5 +31,13 @@ export class FeedbackEventDetailComponent implements OnInit {
       queryParams: { eventId: this.feedbackEvent.id },
       queryParamsHandling: 'merge',
     });
+  }
+
+  private async retrieveOverallFeedbackImgUrl() {
+    await this.feedbackEventService
+      .getOverallFeelingImageUrl(this.feedbackEvent.id)
+      .then((imageUrl) => {
+        this.overallFeelingImgUrl = imageUrl;
+      });
   }
 }
