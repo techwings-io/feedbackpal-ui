@@ -32,9 +32,6 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
 
   displayTellUsMoreTextArea = false;
 
-  @ViewChild('tellUsMoreTextArea')
-  textAreaEl: ElementRef;
-
   @Input()
   tellUsMoreText: string = '';
 
@@ -93,8 +90,6 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   }
 
   onSubmitFeedback(event) {
-    this.textAreaEl.nativeElement.value = '';
-
     console.log('selected event', this.selectedEvent);
 
     event.preventDefault();

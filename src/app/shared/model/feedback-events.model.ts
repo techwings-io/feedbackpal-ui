@@ -8,4 +8,7 @@ export interface FeedbackEvent {
   usersToShareWith: string[];
   validFrom: Date;
   validTo: Date;
+  totalHappy?: number;
+  totalNeutral?: number;
+  totalUnhappy?: number;
 }
