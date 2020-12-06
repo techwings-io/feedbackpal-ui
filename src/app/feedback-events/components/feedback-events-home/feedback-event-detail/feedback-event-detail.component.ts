@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
 import { Feeling } from 'src/app/smiley/model/smiley.model';
+import { FeedbackEventsService } from '../../../../shared/services/feedback-events.service';
 
 @Component({
   selector: 'app-feedback-event-detail',
@@ -14,25 +15,17 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   overallFeelingImgUrl: string = '../assets/images/glassy-smiley-amber.png';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private feedbackEventService: FeedbackEventsService
+  ) {}
 
   ngOnInit(): void {
-    if (
-      this.feedbackEvent.totalHappy > this.feedbackEvent.totalNeutral &&
-      this.feedbackEvent.totalHappy > this.feedbackEvent.totalUnhappy
-    ) {
-      this.overallFeelingImgUrl = '../assets/images/glassy-smiley-green.png';
-    } else if (
-      this.feedbackEvent.totalNeutral > this.feedbackEvent.totalHappy &&
-      this.feedbackEvent.totalNeutral > this.feedbackEvent.totalUnhappy
-    ) {
-      this.overallFeelingImgUrl = '../assets/images/glassy-smiley-amber.png';
-    } else if (
-      this.feedbackEvent.totalUnhappy > this.feedbackEvent.totalHappy &&
-      this.feedbackEvent.totalUnhappy > this.feedbackEvent.totalNeutral
-    ) {
-      this.overallFeelingImgUrl = '../assets/images/glassy-smiley-red.png';
-    }
+    this.feedbackEventService
+      .getOverallFeelingImageUrl(this.feedbackEvent.id)
+      .then((imageUrl) => {
+        this.overallFeelingImgUrl = imageUrl;
+      });
   }
 
   onEventSelected(event) {

@@ -19,6 +19,8 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
 
   private errorOccurred = false;
 
+  overallFeelingImgUrl = '';
+
   subcriptionProcessed: Promise<boolean>;
 
   constructor(
@@ -77,9 +79,25 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
         .subscribe((feedbackEvent: FeedbackEvent) => {
           this.selectedEvent = feedbackEvent;
           this.errorOccurred = false;
+          this.setOverallFeelingImgUrl();
         });
     });
   }
 
+  feedbackSubmitted() {
+    console.log('Feedback was submitted');
+
+    this.setOverallFeelingImgUrl();
+  }
+
   ngOnDestroy(): void {}
+
+  //----->  Private stuff
+  private setOverallFeelingImgUrl() {
+    this.feedbackEventsService
+      .getOverallFeelingImageUrl(this.selectedEvent.id)
+      .then((imageUrl) => {
+        this.overallFeelingImgUrl = imageUrl;
+      });
+  }
 }

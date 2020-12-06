@@ -20,13 +20,16 @@
         >
       </p>
     </div>
-    <div class="col-md"></div>
+    <div class="col-md">
+      <img [src]="[overallFeelingImgUrl]" alt="Feeling" width="50" />
+    </div>
   </div>
   <div class="row">
     <div class="col-md-4 mt-5" *ngFor="let smiley of smileys">
       <app-smiley-card
         [smiley]="smiley"
         [selectedEvent]="selectedEvent"
+        (feedbackSubmitted$)="feedbackSubmitted()"
       ></app-smiley-card>
     </div>
   </div>

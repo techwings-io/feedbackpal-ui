@@ -5,6 +5,8 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 
 import { Smiley } from '../../model/smiley.model';
@@ -39,6 +41,9 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
 
   selectedUsersToShareWith$: Subscription;
   deSelectedUsersToShareWith$: Subscription;
+
+  @Output()
+  feedbackSubmitted$ = new EventEmitter<void>();
 
   selectedUsersToShareWith: Auth0UserModel[] = [];
 
@@ -106,7 +111,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       .storeFeedback(feedback)
       .then((feedback) => {
         this.feedbackSubmittedSuccessfully = true;
-        setInterval(() => {
+        this.feedbackSubmitted$.emit();
+        setTimeout(() => {
           this.feedbackSubmittedSuccessfully = false;
         }, 2000);
       })
