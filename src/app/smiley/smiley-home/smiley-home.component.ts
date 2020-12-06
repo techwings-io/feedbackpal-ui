@@ -100,8 +100,9 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
   private setOverallFeelingImgUrl() {
     this.feedbackEventsService
       .getOverallFeelingImageUrl(this.selectedEvent.id)
-      .then((imageUrl) => {
-        this.overallFeelingImgUrl = imageUrl;
+      .then((response: { event: FeedbackEvent; feelingUrl: string }) => {
+        this.overallFeelingImgUrl = response.feelingUrl;
+        this.selectedEvent = response.event;
       });
   }
 }

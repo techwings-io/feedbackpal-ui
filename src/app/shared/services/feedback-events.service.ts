@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { FeedbackEvent } from '../model/feedback-events.model';
 import { environment } from '../../../environments/environment';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +27,9 @@ export class FeedbackEventsService {
     return this.http.get<FeedbackEvent>(url);
   }
 
-  async getOverallFeelingImageUrl(eventId: string): Promise<string> {
+  async getOverallFeelingImageUrl(
+    eventId: string
+  ): Promise<{ event: FeedbackEvent; feelingUrl: string }> {
     let feedbackEvent: FeedbackEvent;
     await this.getFeedbackEventsById(eventId)
       .toPromise()
@@ -57,6 +58,9 @@ export class FeedbackEventsService {
       console.log('Overall feeling is unhappy');
       feelingUrl = '../assets/images/glassy-smiley-red.png';
     }
-    return feelingUrl;
+    return {
+      event: feedbackEvent,
+      feelingUrl,
+    };
   }
 }

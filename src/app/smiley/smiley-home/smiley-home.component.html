@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-md"></div>
-    <div class="col-md" *ngIf="selectedEvent">
+    <div class="col-md" *ngIf="[selectedEvent]">
       <h4>You are providing feedback for event:</h4>
       <p class="text-center">
         <strong>{{ selectedEvent.eventName }}.</strong>&nbsp;
@@ -18,6 +18,17 @@
           >This event is being shared with
           {{ selectedEvent.usersToShareWith.length }} users</span
         >
+        <span
+          ><div class="alert alert-success" role="alert">
+            This event has received:
+            {{
+              selectedEvent.totalHappy +
+                selectedEvent.totalNeutral +
+                selectedEvent.totalUnhappy
+            }}
+            feedbacks
+          </div>
+        </span>
       </p>
     </div>
     <div class="col-md">

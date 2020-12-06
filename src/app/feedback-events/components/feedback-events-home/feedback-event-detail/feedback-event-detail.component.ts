@@ -36,8 +36,9 @@ export class FeedbackEventDetailComponent implements OnInit {
   private async retrieveOverallFeedbackImgUrl() {
     await this.feedbackEventService
       .getOverallFeelingImageUrl(this.feedbackEvent.id)
-      .then((imageUrl) => {
-        this.overallFeelingImgUrl = imageUrl;
+      .then((response: { event: FeedbackEvent; feelingUrl: string }) => {
+        this.overallFeelingImgUrl = response.feelingUrl;
+        this.feedbackEvent = response.event;
       });
   }
 }

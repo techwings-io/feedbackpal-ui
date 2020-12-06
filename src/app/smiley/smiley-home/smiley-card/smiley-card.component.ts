@@ -33,9 +33,6 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
   @Input()
   selectedEvent: FeedbackEvent;
 
-  @ViewChild('commentsArea')
-  commentsArea: ElementRef;
-
   displayTellUsMoreTextArea = false;
 
   @Input()
@@ -120,17 +117,19 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
         this.feedbackSubmittedSuccessfully = true;
         this.errorOccurred = false;
         this.feedbackSubmitted$.emit();
-        this.commentsArea.nativeElement.value = '';
+        this.tellUsMoreText = '';
         setTimeout(() => {
           this.feedbackSubmittedSuccessfully = false;
         }, 2000);
       })
       .catch((err) => {
+        console.log('An error occurred while submitting the feeback', err);
+
         this.feedbackSubmittedSuccessfully = false;
         this.errorOccurred = true;
+        this.errorOccurred$.emit();
         setTimeout(() => {
           this.errorOccurred = false;
-          this.errorOccurred$.emit();
         }, 5000);
       });
   }
