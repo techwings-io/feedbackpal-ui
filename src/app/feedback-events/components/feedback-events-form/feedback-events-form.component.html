@@ -13,30 +13,18 @@
         [label]="'Provide the description for your event *'"
         [inputType]="'text'"
       ></app-input>
-      <div class="form-group">
-        <label for="validFrom"
-          >Please enter the date from when this event will be active</label
-        >
-        <input
-          type="date"
-          class="form-control"
-          [formControl]="feedbackEventsForm.get('validFrom')"
-          id="validFrom"
-          [value]="resolveValidFrom()"
-        />
-      </div>
-      <div class="form-group">
-        <label for="validTo"
-          >Please enter the date until when this event will be active</label
-        >
-        <input
-          type="date"
-          class="form-control"
-          [formControl]="feedbackEventsForm.get('validTo')"
-          id="validTo"
-          [value]="resolveValidTo()"
-        />
-      </div>
+      <app-input
+        [control]="feedbackEventsForm.get('validFrom')"
+        [label]="'Valid From *'"
+        [inputType]="'date'"
+        [value]="resolveValidFrom()"
+      ></app-input>
+      <app-input
+        [control]="feedbackEventsForm.get('validTo')"
+        [label]="'Valid To *'"
+        [inputType]="'date'"
+        [value]="resolveValidTo()"
+      ></app-input>
 
       <div class="form-check">
         <label for="publicEvent"
@@ -50,8 +38,19 @@
           id="publicEvent"
         />
       </div>
-      <div *ngIf="shareWithOthers">
-        <app-user-search></app-user-search>
+      <div
+        *ngIf="
+          shareWithOthers ||
+          (selectedEvent && selectedEvent.usersToShareWith.length > 0)
+        "
+      >
+        <app-user-search
+          [selectedUsersToShareWith]="
+            selectedEvent && selectedEvent.usersToShareWith.length > 0
+              ? selectedUsersToShareWith
+              : []
+          "
+        ></app-user-search>
       </div>
 
       <button
@@ -64,8 +63,4 @@
     </form>
   </div>
   <div class="col-md"></div>
-</div>
-
-<div>
-  {{ feedbackEventsForm.value | json }}
 </div>

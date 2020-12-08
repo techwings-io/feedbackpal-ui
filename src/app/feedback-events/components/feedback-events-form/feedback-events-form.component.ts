@@ -11,6 +11,8 @@ import { Subscription, throwError } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from '../../../shared/model/auth0.user.model';
 import { FeedbackEventsService } from '../../services/feedback-events.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-feedback-events-form',
@@ -23,6 +25,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   formEdit = false;
   errorOccurred = false;
   selectedEvent: FeedbackEvent;
+  selectedUsersToShareWith: Auth0UserModel[] = [];
 
   shareWithOthers = true;
 
@@ -35,9 +38,24 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     private feedbackEventsService: FeedbackEventsService,
     private userSearchService: UserSearchService,
     private router: Router,
-    @Inject(LOCALE_ID) private locale: string
+    @Inject(LOCALE_ID) private locale: string,
+    private http: HttpClient
   ) {
     this.selectedEvent = history.state.data;
+    // Invoke API to get user details for selected users
+    if (this.selectedEvent) {
+      this.selectedEvent.usersToShareWith.forEach((userId) => {
+        this.http
+          .get<Auth0UserModel>(`${environment.api.serverUrl}/auth/auth0-user`, {
+            params: { userId },
+          })
+          .subscribe((user: Auth0UserModel) => {
+            console.log('user', user);
+
+            this.selectedUsersToShareWith.push(user);
+          });
+      });
+    }
 
     this.usersToShareWith$ = this.userSearchService.usersToShareWith$.subscribe(
       (users) => {
@@ -49,8 +67,6 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('selected event', this.selectedEvent);
-
     this.feedbackEventsForm = new FormGroup({
       eventName: new FormControl(this.resolveEventName(), [
         Validators.required,
@@ -66,6 +82,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
       ]),
       validTo: new FormControl(this.resolveValidTo(), [Validators.required]),
     });
+
     this.auth.user$.subscribe((profile: Auth0Profile) => {
       const { sub, email } = profile;
 

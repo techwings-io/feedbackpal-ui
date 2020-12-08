@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { UserSearchService } from '../../services/user-search.service';
@@ -14,12 +14,15 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
   candidateUsersToShareWith: Auth0UserModel[] = [];
 
+  @Input()
   selectedUsersToShareWith: Auth0UserModel[] = [];
 
   selectedUsersToShareWith$: Subscription;
   deSelectedUsersToShareWith$: Subscription;
 
   constructor(private userSearchService: UserSearchService) {
+    console.log('selected users to share with', this.selectedUsersToShareWith);
+
     this.selectedUsersToShareWith$ = this.userSearchService.userToShareWithSelected$.subscribe(
       (user) => {
         this.selectedUsersToShareWith.push(user);
@@ -39,7 +42,9 @@ export class UserSearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('User search', this.selectedUsersToShareWith);
+  }
 
   ngOnDestroy() {
     if (this.selectedUsersToShareWith$) {
