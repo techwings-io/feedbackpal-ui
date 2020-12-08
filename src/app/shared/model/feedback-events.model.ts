@@ -11,4 +11,5 @@ export interface FeedbackEvent {
   totalHappy?: number;
   totalNeutral?: number;
   totalUnhappy?: number;
+  totalFeedbacks?: number;
 }

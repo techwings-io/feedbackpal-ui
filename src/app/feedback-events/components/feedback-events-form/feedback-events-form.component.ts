@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 
 import { utcDateValidator } from '../../../shared/validators/utc.date.validator';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
@@ -96,6 +96,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     const $http = this.feedbackEventsService.createFeedbackEvent(feedbackEvent);
     $http
       .pipe(
+        take(1),
         catchError((error) => {
           console.error(
             'A problem occurred while retrieving the feedback events',

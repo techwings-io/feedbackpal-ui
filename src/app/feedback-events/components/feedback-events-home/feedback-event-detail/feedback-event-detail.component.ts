@@ -33,6 +33,12 @@ export class FeedbackEventDetailComponent implements OnInit {
     });
   }
 
+  onEditFeedbackEvent(event) {
+    event.preventDefault();
+  }
+
+  //-----> Private stuff
+
   private async retrieveOverallFeedbackImgUrl() {
     await this.feedbackEventService
       .getOverallFeelingImageUrl(this.feedbackEvent.id)
