@@ -23,7 +23,6 @@ export class FeedbackEventsService {
   getFeedbackEvents(
     paginationDto: GetFeedbackEventsFilterDto
   ): Observable<PaginatedResultsDto<FeedbackEvent>> {
-    console.log('paginationDto', paginationDto);
     let params: HttpParams;
     if (paginationDto) {
       if (paginationDto.limit) {
@@ -45,8 +44,6 @@ export class FeedbackEventsService {
         params = params.set('validTo', paginationDto.validTo.toISOString());
       }
     }
-
-    console.log('params', params.toString());
 
     return this.http.get<PaginatedResultsDto<FeedbackEvent>>(this.apiUrl, {
       params,

@@ -31,7 +31,7 @@
   <div class="row text-center mt-3">
     <div class="col-md"></div>
     <div class="col-md">
-      <p>Select the number of records per page</p>
+      Select the number of records per page:
       <select (change)="onTableSizeChange($event)" class="custom-select">
         <option *ngFor="let size of tableSizes" [ngValue]="size">
           {{ size }}

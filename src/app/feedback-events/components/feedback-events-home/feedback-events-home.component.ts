@@ -91,7 +91,6 @@ export class FeedbackEventsHomeComponent implements OnInit, OnDestroy {
     const paginationDto = new GetFeedbackEventsFilterDto();
     paginationDto.page = this.page;
     paginationDto.limit = this.tableSize;
-    console.log('paginationDto', paginationDto);
 
     return paginationDto;
   }
