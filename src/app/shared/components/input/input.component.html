@@ -5,6 +5,7 @@
     [type]="inputType"
     class="form-control"
     [ngClass]="{ 'formControl-error': showErrors() }"
+    [value]="value"
   />
 
   <div *ngIf="showErrors()">

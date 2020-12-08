@@ -13,6 +13,31 @@
         [label]="'Provide the description for your event *'"
         [inputType]="'text'"
       ></app-input>
+      <div class="form-group">
+        <label for="validFrom"
+          >Please enter the date from when this event will be active</label
+        >
+        <input
+          type="date"
+          class="form-control"
+          [formControl]="feedbackEventsForm.get('validFrom')"
+          id="validFrom"
+          [value]="resolveValidFrom()"
+        />
+      </div>
+      <div class="form-group">
+        <label for="validTo"
+          >Please enter the date until when this event will be active</label
+        >
+        <input
+          type="date"
+          class="form-control"
+          [formControl]="feedbackEventsForm.get('validTo')"
+          id="validTo"
+          [value]="resolveValidTo()"
+        />
+      </div>
+
       <div class="form-check">
         <label for="publicEvent"
           >Do you want to make this event public? (Defaults to private)</label
@@ -28,39 +53,7 @@
       <div *ngIf="shareWithOthers">
         <app-user-search></app-user-search>
       </div>
-      <mat-form-field>
-        <label for="validFrom"></label>
-        <input
-          matInput
-          [matDatepicker]="validFromPicker"
-          placeholder="Event valid from"
-          formControlName="validFrom"
-          required
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="validFromPicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #validFromPicker></mat-datepicker>
-      </mat-form-field>
-      <div class="mx-2"></div>
-      <mat-form-field>
-        <label for="validTo"></label>
-        <input
-          matInput
-          [matDatepicker]="validToPicker"
-          placeholder="Event valid until"
-          formControlName="validTo"
-          required
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="validToPicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #validToPicker></mat-datepicker>
-      </mat-form-field>
 
-      <div class="mx-2"></div>
       <button
         type="submit"
         class="btn btn-primary mt-3"
@@ -71,4 +64,8 @@
     </form>
   </div>
   <div class="col-md"></div>
+</div>
+
+<div>
+  {{ feedbackEventsForm.value | json }}
 </div>

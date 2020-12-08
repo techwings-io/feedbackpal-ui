@@ -29,7 +29,12 @@
         <button class="btn btn-success mr-1" (click)="onEventSelected($event)">
           Select
         </button>
-        <button class="btn btn-primary mr-1">Edit</button>
+        <button
+          class="btn btn-primary mr-1"
+          (click)="onEditFeedbackEvent($event)"
+        >
+          Edit
+        </button>
         <button class="btn btn-danger">Delete</button>
       </div>
     </div>

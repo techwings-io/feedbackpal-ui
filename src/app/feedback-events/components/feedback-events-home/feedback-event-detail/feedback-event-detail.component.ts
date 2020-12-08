@@ -35,6 +35,14 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   onEditFeedbackEvent(event) {
     event.preventDefault();
+    this.router.navigate(
+      ['feedbackEventsHome', 'createOrUpdateFeedbackEvent'],
+      {
+        queryParams: { eventId: this.feedbackEvent.id },
+        queryParamsHandling: 'merge',
+        state: { data: this.feedbackEvent },
+      }
+    );
   }
 
   //-----> Private stuff

@@ -1,15 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, take } from 'rxjs/operators';
 
-import { utcDateValidator } from '../../../shared/validators/utc.date.validator';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { Auth0Profile } from '../../../shared/model/auth0.profile.model';
 import { Subscription, throwError } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from '../../../shared/model/auth0.user.model';
-import { Router } from '@angular/router';
 import { FeedbackEventsService } from '../../services/feedback-events.service';
 
 @Component({
@@ -20,32 +20,25 @@ import { FeedbackEventsService } from '../../services/feedback-events.service';
 export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   userProfile: Auth0Profile = { sub: '', email: '' };
   formSubmitted = false;
+  formEdit = false;
+  errorOccurred = false;
+  selectedEvent: FeedbackEvent;
 
   shareWithOthers = true;
 
   usersToShareWith: Auth0UserModel[];
   usersToShareWith$: Subscription;
-
-  feedbackEventsForm = new FormGroup({
-    eventName: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    publicEvent: new FormControl(false),
-    validFrom: new FormControl('', [Validators.required, utcDateValidator]),
-    validTo: new FormControl('', [Validators.required, utcDateValidator]),
-  });
+  feedbackEventsForm: FormGroup;
 
   constructor(
     private auth: AuthService,
     private feedbackEventsService: FeedbackEventsService,
     private userSearchService: UserSearchService,
-    private router: Router
+    private router: Router,
+    @Inject(LOCALE_ID) private locale: string
   ) {
+    this.selectedEvent = history.state.data;
+
     this.usersToShareWith$ = this.userSearchService.usersToShareWith$.subscribe(
       (users) => {
         console.log('Received feedback event', users);
@@ -56,6 +49,23 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('selected event', this.selectedEvent);
+
+    this.feedbackEventsForm = new FormGroup({
+      eventName: new FormControl(this.resolveEventName(), [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      description: new FormControl(this.resolveEventDescription(), [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      publicEvent: new FormControl(this.resolvePublicEvent()),
+      validFrom: new FormControl(this.resolveValidFrom(), [
+        Validators.required,
+      ]),
+      validTo: new FormControl(this.resolveValidTo(), [Validators.required]),
+    });
     this.auth.user$.subscribe((profile: Auth0Profile) => {
       const { sub, email } = profile;
 
@@ -118,5 +128,33 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
 
   onShareClick(event) {
     this.shareWithOthers = !this.shareWithOthers;
+  }
+
+  //---> Private stuff
+  private resolveEventName(): string {
+    return this.selectedEvent && this.selectedEvent.eventName
+      ? this.selectedEvent.eventName
+      : '';
+  }
+  private resolveEventDescription(): string {
+    return this.selectedEvent && this.selectedEvent.description
+      ? this.selectedEvent.description
+      : '';
+  }
+
+  private resolvePublicEvent(): boolean {
+    return this.selectedEvent && this.selectedEvent.publicEvent;
+  }
+  resolveValidFrom(): Date | string {
+    const datePipe = new DatePipe(this.locale);
+    return this.selectedEvent && this.selectedEvent.validFrom
+      ? datePipe.transform(this.selectedEvent.validFrom, 'yyyy-MM-dd')
+      : '';
+  }
+  resolveValidTo(): Date | string {
+    const datePipe = new DatePipe(this.locale);
+    return this.selectedEvent && this.selectedEvent.validTo
+      ? datePipe.transform(this.selectedEvent.validTo, 'yyyy-MM-dd')
+      : '';
   }
 }

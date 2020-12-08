@@ -5,7 +5,7 @@ import { FeedbackEventsHomeComponent } from './components/feedback-events-home/f
 
 const routes: Routes = [
   {
-    path: 'createFeedbackEvent',
+    path: 'createOrUpdateFeedbackEvent',
     component: FeedbackEventsFormComponent,
   },
   {
