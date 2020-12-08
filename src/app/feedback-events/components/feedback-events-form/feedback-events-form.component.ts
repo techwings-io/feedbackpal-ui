@@ -2,14 +2,15 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError } from 'rxjs/operators';
-import { FeedbackEventsService } from '../../../shared/services/feedback-events.service';
+
 import { utcDateValidator } from '../../../shared/validators/utc.date.validator';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
-import { Auth0Profile } from '../../../shared/model/auth0.profile';
+import { Auth0Profile } from '../../../shared/model/auth0.profile.model';
 import { Subscription, throwError } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from '../../../shared/model/auth0.user.model';
 import { Router } from '@angular/router';
+import { FeedbackEventsService } from '../../services/feedback-events.service';
 
 @Component({
   selector: 'app-feedback-events-form',

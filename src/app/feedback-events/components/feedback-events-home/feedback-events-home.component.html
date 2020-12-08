@@ -28,12 +28,32 @@
     </div>
     <div class="col-md"></div>
   </div>
-  <div class="row" *ngIf="areThereAnyFeedbackEvents()">
+  <div class="row text-center mt-3">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <p>Select the number of records per page</p>
+      <select (change)="onTableSizeChange($event)" class="custom-select">
+        <option *ngFor="let size of tableSizes" [ngValue]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md"></div>
+  </div>
+  <ng-container *ngIf="areThereAnyFeedbackEvents()">
     <app-feedback-event-detail
-      *ngFor="let feedbackEvent of feedbackEvents"
+      *ngFor="
+        let feedbackEvent of feedbackEvents
+          | paginate
+            : {
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+              }
+      "
       [feedbackEvent]="feedbackEvent"
     ></app-feedback-event-detail>
-  </div>
+  </ng-container>
 </div>
 
 <app-generic-error-page *ngIf="errorOccurred"></app-generic-error-page>

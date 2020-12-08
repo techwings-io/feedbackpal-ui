@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
 import { Feeling } from 'src/app/smiley/model/smiley.model';
-import { FeedbackEventsService } from '../../../../shared/services/feedback-events.service';
+import { FeedbackEventsService } from '../../../services/feedback-events.service';
 
 @Component({
   selector: 'app-feedback-event-detail',

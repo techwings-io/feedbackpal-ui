@@ -3,8 +3,9 @@ import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
 import { Feeling, Smiley } from '../model/smiley.model';
 
 import { ActivatedRoute } from '@angular/router';
-import { FeedbackEventsService } from '../../shared/services/feedback-events.service';
-import { catchError } from 'rxjs/operators';
+
+import { catchError, delay, retry } from 'rxjs/operators';
+import { FeedbackEventsService } from '../../feedback-events/services/feedback-events.service';
 
 @Component({
   selector: 'app-smiley-home',
@@ -54,10 +55,6 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
     },
   ];
 
-  onSelectedSmiley(smiley: Smiley) {
-    console.log('App selected smiley', smiley);
-  }
-
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const eventId = params.get('eventId');
@@ -74,7 +71,8 @@ export class SmileyHomeComponent implements OnInit, OnDestroy {
             );
             this.errorOccurred = true;
             return null;
-          })
+          }),
+          retry(3)
         )
         .subscribe((feedbackEvent: FeedbackEvent) => {
           this.selectedEvent = feedbackEvent;

@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FeedbackEventsHomeComponent } from './components/feedback-events-home/feedback-events-home.component';
 import { FeedbackEventDetailComponent } from './components/feedback-events-home/feedback-event-detail/feedback-event-detail.component';
 import { GenericErrorPageComponent } from '../shared/components/generic-error-page/generic-error-page.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { GenericErrorPageComponent } from '../shared/components/generic-error-pa
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    NgxPaginationModule,
   ],
 })
 export class FeedbackEventsModule {}

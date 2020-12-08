@@ -20,6 +20,7 @@ import { LogoutButtonComponent } from './header/logout-button/logout-button.comp
 import { ProfileComponent } from './profile/profile/profile.component';
 
 import { environment } from '../environments/environment';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { environment } from '../environments/environment';
       },
     }),
     BrowserAnimationsModule,
+    NgxPaginationModule,
   ],
   providers: [
     {
