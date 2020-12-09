@@ -1,8 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
-import { Feeling } from 'src/app/smiley/model/smiley.model';
+
 import { FeedbackEventsService } from '../../../services/feedback-events.service';
+
+import { environment as env } from '../../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { take, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-feedback-event-detail',
@@ -17,7 +22,8 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private feedbackEventService: FeedbackEventsService
+    private feedbackEventService: FeedbackEventsService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +49,31 @@ export class FeedbackEventDetailComponent implements OnInit {
         state: { data: this.feedbackEvent },
       }
     );
+  }
+
+  onDeleteFeedback(event) {
+    event.preventDefault();
+    const apiUrl = `${env.api.serverUrl}/feedbackEvents/${this.feedbackEvent.id}`;
+    this.http
+      .delete(apiUrl)
+      .pipe(
+        take(1),
+        catchError((err) => {
+          return throwError(
+            `Error occurred while invoking ${apiUrl}. Event ${
+              this.feedbackEvent.id
+            } has not been deleted.
+            The error is ${JSON.stringify(err)}`
+          );
+        })
+      )
+      .subscribe(() => {
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(['/feedbackEventsHome']);
+          });
+      });
   }
 
   //-----> Private stuff

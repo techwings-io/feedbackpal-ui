@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, take } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
 
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { Auth0Profile } from '../../../shared/model/auth0.profile.model';
@@ -109,18 +110,24 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
       validTo,
     } = this.feedbackEventsForm.value;
 
+    const validFromUtc = new Date(validFrom);
+    const validToUtc = new Date(validTo);
+
     const feedbackEvent: FeedbackEvent = {
-      id: '',
+      id: this.selectedEvent ? this.selectedEvent.id : uuid(),
       eventName,
       description,
       createdBy: this.userProfile.sub,
       email: this.userProfile.email,
-      publicEvent,
-      usersToShareWith: this.usersToShareWith.map((user) => {
-        return user.user_id;
-      }),
-      validFrom,
-      validTo,
+      publicEvent: !!publicEvent,
+      usersToShareWith:
+        this.usersToShareWith && this.usersToShareWith.length > 0
+          ? this.usersToShareWith.map((user) => {
+              return user.user_id;
+            })
+          : [],
+      validFrom: validFromUtc,
+      validTo: validToUtc,
     };
     const $http = this.feedbackEventsService.createFeedbackEvent(feedbackEvent);
     $http
@@ -128,7 +135,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
         take(1),
         catchError((error) => {
           console.error(
-            'A problem occurred while retrieving the feedback events',
+            'A problem occurred while creating the feedback event',
             error
           );
           return throwError(error);
@@ -138,11 +145,14 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
         (res) => {
           console.log('Response', res);
           this.feedbackEventsForm.reset();
+          this.router
+            .navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['/feedbackEventsHome']);
+            });
         },
         (err) => console.error(err)
       );
-    this.feedbackEventsForm.reset();
-    this.router.navigateByUrl('/feedbackEventsHome');
   }
 
   onShareClick(event) {
