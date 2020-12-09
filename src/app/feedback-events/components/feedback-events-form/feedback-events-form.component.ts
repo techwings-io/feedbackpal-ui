@@ -44,11 +44,13 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     this.selectedEvent = history.state.data;
     // Invoke API to get user details for selected users
     if (this.selectedEvent) {
+      this.formEdit = true;
       this.selectedEvent.usersToShareWith.forEach((userId) => {
         this.http
           .get<Auth0UserModel>(`${environment.api.serverUrl}/auth/auth0-user`, {
             params: { userId },
           })
+          .pipe(take(1))
           .subscribe((user: Auth0UserModel) => {
             console.log('user', user);
 

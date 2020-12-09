@@ -52,7 +52,7 @@ export class FeedbackEventsHomeComponent implements OnInit, OnDestroy {
   }
 
   displayCreateEventForm(): void {
-    this.router.navigate(['feedbackEventsHome', 'createFeedbackEvent']);
+    this.router.navigate(['feedbackEventsHome', 'createOrUpdateFeedbackEvent']);
   }
 
   onTableDataChange(event) {
