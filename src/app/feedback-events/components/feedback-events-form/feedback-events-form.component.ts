@@ -159,6 +159,10 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     this.shareWithOthers = !this.shareWithOthers;
   }
 
+  onCancelSelected() {
+    this.router.navigateByUrl('/feedbackEventsHome');
+  }
+
   //---> Private stuff
   private resolveEventName(): string {
     return this.selectedEvent && this.selectedEvent.eventName
