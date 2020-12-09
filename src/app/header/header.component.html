@@ -47,8 +47,23 @@
       <li class="nav-item mr-2" *ngIf="auth.isAuthenticated$ | async">
         <app-logout-button></app-logout-button>
       </li>
-      <li class="nav-item" *ngIf="auth.isAuthenticated$ | async">
-        <a class="nav-link" routerLink="profile">Profile</a>
+      <li class="nav-item dropdown" *ngIf="auth.isAuthenticated$ | async">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          My FeedbackPal
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/profile">My Profile</a>
+          <a class="dropdown-item" routerLink="/myEvents">My Events</a>
+          <a class="dropdown-item" routerLink="/myFeedbacks">My Feedbacks</a>
+        </div>
       </li>
     </ul>
   </div>
