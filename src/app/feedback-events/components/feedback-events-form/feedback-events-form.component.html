@@ -13,31 +13,21 @@
         [label]="'Provide the description for your event *'"
         [inputType]="'text'"
       ></app-input>
-      <app-input
-        [control]="feedbackEventsForm.get('validFrom')"
-        [label]="'Valid From *'"
-        [inputType]="'date'"
-        [value]="resolveValidFrom()"
-      ></app-input>
-      <app-input
-        [control]="feedbackEventsForm.get('validTo')"
-        [label]="'Valid To *'"
-        [inputType]="'date'"
-        [value]="resolveValidTo()"
-      ></app-input>
 
       <div class="form-check">
         <label for="publicEvent"
-          >Do you want to make this event public? (Defaults to private)</label
-        >
+          >Do you want to make this event public? (Defaults to private)
+        </label>
         <input
           type="checkbox"
           (change)="onShareClick($event)"
           class="form-check-input"
           [formControl]="feedbackEventsForm.get('publicEvent')"
           id="publicEvent"
+          [value]="isPublicEvent()"
         />
       </div>
+
       <div
         *ngIf="
           shareWithOthers ||
@@ -52,7 +42,36 @@
           "
         ></app-user-search>
       </div>
-
+      <mat-form-field>
+        <label for="validFrom">Event valid from *</label>
+        <input
+          matInput
+          [matDatepicker]="validFromPicker"
+          formControlName="validFrom"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="validFromPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #validFromPicker></mat-datepicker>
+      </mat-form-field>
+      <div class="mx-2"></div>
+      <mat-form-field>
+        <label for="validTo">Enter valid to *</label>
+        <input
+          matInput
+          [matDatepicker]="validToPicker"
+          formControlName="validTo"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="validToPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #validToPicker></mat-datepicker>
+      </mat-form-field>
+      <div class="mx-2"></div>
       <button
         type="submit"
         class="btn btn-primary mt-3"

@@ -60,6 +60,8 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
       });
     }
 
+    this.shareWithOthers = !this.isPublicEvent();
+
     this.usersToShareWith$ = this.userSearchService.usersToShareWith$.subscribe(
       (users) => {
         console.log('Received feedback event', users);
@@ -79,7 +81,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(5),
       ]),
-      publicEvent: new FormControl(this.resolvePublicEvent()),
+      publicEvent: new FormControl(this.isPublicEvent()),
       validFrom: new FormControl(this.resolveValidFrom(), [
         Validators.required,
       ]),
@@ -163,6 +165,10 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/feedbackEventsHome');
   }
 
+  isPublicEvent(): boolean {
+    return this.selectedEvent && this.selectedEvent.publicEvent;
+  }
+
   //---> Private stuff
   private resolveEventName(): string {
     return this.selectedEvent && this.selectedEvent.eventName
@@ -175,9 +181,6 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
       : '';
   }
 
-  private resolvePublicEvent(): boolean {
-    return this.selectedEvent && this.selectedEvent.publicEvent;
-  }
   resolveValidFrom(): Date | string {
     const datePipe = new DatePipe(this.locale);
     return this.selectedEvent && this.selectedEvent.validFrom

@@ -9,6 +9,10 @@ import { FeedbackEventsHomeComponent } from './components/feedback-events-home/f
 import { FeedbackEventDetailComponent } from './components/feedback-events-home/feedback-event-detail/feedback-event-detail.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     SharedModule,
     NgxPaginationModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
   ],
 })
 export class FeedbackEventsModule {}
