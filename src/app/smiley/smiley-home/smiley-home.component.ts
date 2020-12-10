@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FeedbackEvent } from 'src/app/shared/model/feedback-events.model';
-import { Feeling, Smiley } from '../model/smiley.model';
+import { Smiley } from '../model/smiley.model';
 
 import { ActivatedRoute } from '@angular/router';
 
 import { catchError, delay, retry } from 'rxjs/operators';
 import { FeedbackEventsService } from '../../feedback-events/services/feedback-events.service';
+import { Feeling } from 'src/app/shared/model/feeling.enum';
 
 @Component({
   selector: 'app-smiley-home',

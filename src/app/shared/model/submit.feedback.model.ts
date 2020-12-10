@@ -1,4 +1,4 @@
-import { Feeling } from '../../smiley/model/smiley.model';
+import { Feeling } from './feeling.enum';
 
 export interface SubmitFeedback {
   eventId: string;

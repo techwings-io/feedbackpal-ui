@@ -1,8 +1,4 @@
-export enum Feeling {
-  HAPPY,
-  NEUTRAL,
-  ANGRY,
-}
+import { Feeling } from '../../shared/model/feeling.enum';
 
 export interface Smiley {
   id: string;

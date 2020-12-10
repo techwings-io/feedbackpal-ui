@@ -14,6 +14,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'myFeedbackpal',
+    loadChildren: () =>
+      import('./myfeedbackpal/myfeedbackpal.module').then(
+        (m) => m.MyfeedbackpalModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'feedbackEventsHome',
     loadChildren: () =>
       import('./feedback-events/feedback-events.module').then(
