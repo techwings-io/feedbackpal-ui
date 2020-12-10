@@ -43,8 +43,6 @@ export class MyFeedbackpalHomeComponent implements OnInit {
         catchError((err) => of([]))
       )
       .subscribe((result: PaginatedResultsDto<MyFeedbacksDto>) => {
-        console.log('result', result);
-
         this.myFeedbacks = result.data;
         this.count = result.totalCount;
       });
