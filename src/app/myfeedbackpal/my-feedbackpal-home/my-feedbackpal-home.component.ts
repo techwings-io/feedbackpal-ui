@@ -7,6 +7,7 @@ import { MyFeedbackpalService } from '../services/myfeedbackpal.service';
 import { take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { PaginatedResultsDto } from '../../shared/pagination/paginated-results-dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-feedbackpal-home',
@@ -17,20 +18,25 @@ export class MyFeedbackpalHomeComponent implements OnInit {
   myFeedbacks: MyFeedbacksDto[];
 
   page = 1;
+
   count = 0;
   tableSize = 10;
   tableSizes = [10, 20, 30, 40, 50];
 
   private apiUrl = `${env.api.serverUrl}/myFeedbackpal/myFeedbacks`;
 
-  constructor(private myFeedbackpalService: MyFeedbackpalService) {}
+  constructor(
+    private myFeedbackpalService: MyFeedbackpalService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchMyFeedbacks();
   }
 
-  fetchNextBatch() {
-    this.fetchMyFeedbacks();
+  onSelectEvent(event) {
+    event.preventDefault();
+    this.router.navigateByUrl('/feedbackEventsHome');
   }
 
   //----> Private stuff
@@ -44,15 +50,14 @@ export class MyFeedbackpalHomeComponent implements OnInit {
       )
       .subscribe((result: PaginatedResultsDto<MyFeedbacksDto>) => {
         this.myFeedbacks = result.data;
-        this.count = result.totalCount;
       });
   }
 
   private getPaginationDto(): PaginationDto {
     const paginationDto = new PaginationDto();
     paginationDto.page = this.page;
-    paginationDto.limit = this.tableSize;
-
+    //TODO change it to be configurable
+    paginationDto.limit = 10;
     return paginationDto;
   }
 }

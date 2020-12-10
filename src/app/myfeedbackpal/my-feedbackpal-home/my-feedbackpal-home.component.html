@@ -1,4 +1,22 @@
-<div class="container">
+<div class="container" *ngIf="!myFeedbacks || myFeedbacks.length === 0">
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <h1>Uh-oh! It appears you haven't left any feedback</h1>
+      <p>Click the button below to start leaving your feedback!</p>
+      <button
+        type="button"
+        class="btn btn-primary btn-block"
+        (click)="onSelectEvent($event)"
+      >
+        Select an event!
+      </button>
+    </div>
+    <div class="col-md"></div>
+  </div>
+</div>
+
+<div class="container" *ngIf="myFeedbacks && myFeedbacks.length > 0">
   <div class="row">
     <div class="col-md"></div>
     <div class="col-md text-center">
@@ -6,48 +24,5 @@
     </div>
     <div class="col-md"></div>
   </div>
-  <div class="row" *ngIf="myFeedbacks && myFeedbacks.length > 0">
-    <table id="myFeedbacksTable" class="table table-striped table-dark">
-      <thead>
-        <tr>
-          <th scope="col">Event Name</th>
-          <th scope="col">Feeling</th>
-          <th scope="col">Comments</th>
-          <th scope="col">Last Created</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
-            let feedback of myFeedbacks
-              | paginate
-                : {
-                    itemsPerPage: tableSize,
-                    currentPage: page,
-                    totalItems: count
-                  }
-          "
-        >
-          <td>{{ feedback.eventData.eventName }}</td>
-          <td>
-            <img
-              [src]="feedback.feedbackData.feeling | feeling"
-              alt="Feeling"
-              class="rounded-circle"
-              width="30"
-            />
-          </td>
-          <td>{{ feedback.feedbackData.comments }}</td>
-          <td>
-            {{
-              feedback.feedbackData.lastCreated | date: 'dd/MM/yyyy @ hh:mm:ss'
-            }}
-          </td>
-        </tr>
-      </tbody>
-      <pagination-controls
-        (pageChange)="page = $event; fetchNextBatch()"
-      ></pagination-controls>
-    </table>
-  </div>
+  <app-my-feedback-detail [myFeedbacks]="myFeedbacks"></app-my-feedback-detail>
 </div>
