@@ -34,7 +34,13 @@
       </td>
     </tr>
   </tbody>
-  <pagination-controls
-    (pageChange)="page = $event; fetchNextBatch()"
-  ></pagination-controls>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-sm">
+        <pagination-controls
+          (pageChange)="page = $event; fetchNextBatch()"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
 </table>
