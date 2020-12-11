@@ -1,14 +1,14 @@
 <div class="container" *ngIf="!errorOccurred">
   <div class="row mt-5 text-center">
-    <div class="col-md"></div>
-    <div class="col-md">
+    <div class="col-sm"></div>
+    <div class="col-sm">
       <h1>Select your event</h1>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
   <div class="row">
-    <div class="col-md"></div>
-    <div class="col-md">
+    <div class="col-sm"></div>
+    <div class="col-sm">
       <button
         class="btn btn-success btn-block"
         (click)="displayCreateEventForm()"
@@ -16,21 +16,21 @@
         Create a new event
       </button>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
   <div class="row text-center" *ngIf="!areThereAnyFeedbackEvents()">
-    <div class="col-md"></div>
-    <div class="col-md">
+    <div class="col-sm"></div>
+    <div class="col-sm">
       <p>
         It appears you don't have any events. Click the button above to create a
         new event to provide feedback.
       </p>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
   <div class="row text-center mt-3" *ngIf="feedbackEvents.length > 0">
-    <div class="col-md"></div>
-    <div class="col-md">
+    <div class="col-sm"></div>
+    <div class="col-sm">
       Select the number of records per page:
       <select (change)="onTableSizeChange($event)" class="custom-select">
         <option *ngFor="let size of tableSizes" [ngValue]="size">
@@ -38,7 +38,7 @@
         </option>
       </select>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
   <ng-container *ngIf="areThereAnyFeedbackEvents()">
     <app-feedback-event-detail
@@ -54,6 +54,15 @@
       [feedbackEvent]="feedbackEvent"
     ></app-feedback-event-detail>
   </ng-container>
+  <div class="row mt-2">
+    <div class="col-sm"></div>
+    <div class="col-sm">
+      <pagination-controls
+        (pageChange)="page = $event; fetchNextBatch()"
+      ></pagination-controls>
+    </div>
+    <div class="col-sm"></div>
+  </div>
 </div>
 
 <app-generic-error-page *ngIf="errorOccurred"></app-generic-error-page>

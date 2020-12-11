@@ -1,14 +1,14 @@
 <div class="row mt-5">
-  <div class="col-md"></div>
-  <div class="col-md">
+  <div class="col-sm"></div>
+  <div class="col-sm">
     <div class="card">
       <div class="card-header">Event</div>
       <div class="card-body">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-sm-8">
             <h5 class="card-title">{{ feedbackEvent.eventName }}</h5>
           </div>
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <img [src]="[overallFeelingImgUrl]" alt="Feeling" width="50" />
           </div>
         </div>
@@ -18,10 +18,10 @@
         </p>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <p>Valid from: {{ feedbackEvent.validFrom | date }}</p>
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <p>Valid to: {{ feedbackEvent.validTo | date }}</p>
           </div>
         </div>
@@ -41,5 +41,5 @@
       </div>
     </div>
   </div>
-  <div class="col-md"></div>
+  <div class="col-sm"></div>
 </div>

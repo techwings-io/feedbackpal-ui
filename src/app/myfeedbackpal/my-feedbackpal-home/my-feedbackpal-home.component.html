@@ -1,7 +1,7 @@
 <div class="container" *ngIf="!myFeedbacks || myFeedbacks.length === 0">
   <div class="row">
-    <div class="col-md"></div>
-    <div class="col-md">
+    <div class="col-sm"></div>
+    <div class="col-sm">
       <h1>Uh-oh! It appears you haven't left any feedback</h1>
       <p>Click the button below to start leaving your feedback!</p>
       <button
@@ -12,17 +12,17 @@
         Select an event!
       </button>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
 </div>
 
 <div class="container" *ngIf="myFeedbacks && myFeedbacks.length > 0">
   <div class="row">
-    <div class="col-md"></div>
-    <div class="col-md text-center">
+    <div class="col-sm"></div>
+    <div class="col-sm text-center">
       <h1>Here is a list of your feedbacks</h1>
     </div>
-    <div class="col-md"></div>
+    <div class="col-sm"></div>
   </div>
   <app-my-feedback-detail [myFeedbacks]="myFeedbacks"></app-my-feedback-detail>
 </div>

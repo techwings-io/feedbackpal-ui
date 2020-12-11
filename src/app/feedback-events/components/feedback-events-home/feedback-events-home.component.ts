@@ -51,6 +51,10 @@ export class FeedbackEventsHomeComponent implements OnInit, OnDestroy {
     return this.feedbackEvents.length > 0;
   }
 
+  fetchNextBatch() {
+    this.fetchFeedbackEvents();
+  }
+
   displayCreateEventForm(): void {
     this.router.navigate(['feedbackEventsHome', 'createOrUpdateFeedbackEvent']);
   }
@@ -82,8 +86,8 @@ export class FeedbackEventsHomeComponent implements OnInit, OnDestroy {
       )
       .subscribe((paginatedResults: PaginatedResultsDto<FeedbackEvent>) => {
         console.log('paginated results', paginatedResults);
-
         this.feedbackEvents = paginatedResults.data;
+        this.count = paginatedResults.totalCount;
       });
   }
 

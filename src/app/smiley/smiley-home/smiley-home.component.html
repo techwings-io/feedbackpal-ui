@@ -1,12 +1,12 @@
 <div class="container" *ngIf="!errorOccurred">
   <div class="row">
-    <div class="col-md-12 mt-2">
+    <div class="col-sm-12 mt-2">
       <h1 class="text-center">How are you feeling?</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-md"></div>
-    <div class="col-md" *ngIf="[selectedEvent]">
+    <div class="col-sm"></div>
+    <div class="col-sm" *ngIf="[selectedEvent]">
       <h4>You are providing feedback for event:</h4>
       <p class="text-center">
         <strong>{{ selectedEvent.eventName }}.</strong>
@@ -34,12 +34,12 @@
         </span>
       </p>
     </div>
-    <div class="col-md">
+    <div class="col-sm">
       <img [src]="[overallFeelingImgUrl]" alt="Feeling" width="50" />
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 mt-2" *ngFor="let smiley of smileys">
+    <div class="col-sm-4 mt-2" *ngFor="let smiley of smileys">
       <app-smiley-card
         [smiley]="smiley"
         [selectedEvent]="selectedEvent"
