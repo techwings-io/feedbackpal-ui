@@ -12,7 +12,7 @@
     "heroku-prebuild": "npm i -g @angular/cli"
   },
   "engines": {
-    "node": "14.14.0",
+    "node": "12.x",
     "npm": "7.0.13"
   },
   "private": true,
