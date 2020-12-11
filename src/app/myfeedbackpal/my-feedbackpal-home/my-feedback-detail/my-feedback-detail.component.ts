@@ -23,7 +23,9 @@ export class MyFeedbackDetailComponent implements OnInit {
 
   constructor(private myFeedbackpalService: MyFeedbackpalService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchMyFeedbacks();
+  }
 
   fetchNextBatch() {
     this.fetchMyFeedbacks();
@@ -40,13 +42,23 @@ export class MyFeedbackDetailComponent implements OnInit {
       )
       .subscribe((result: PaginatedResultsDto<MyFeedbacksDto>) => {
         this.myFeedbacks = result.data;
+        console.log('Paginated result', result);
+
+        this.count = result.totalCount;
+        this.logPaginationData();
       });
   }
 
   private getPaginationDto(): PaginationDto {
     const paginationDto = new PaginationDto();
     paginationDto.page = this.page;
-
+    paginationDto.limit = this.tableSize;
     return paginationDto;
+  }
+
+  private logPaginationData(): void {
+    console.log('page', this.page);
+    console.log('count', this.count);
+    console.log('limit', this.tableSize);
   }
 }
