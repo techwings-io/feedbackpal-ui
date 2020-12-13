@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { take, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
+import { Auth0UserModel } from '../../../../shared/model/auth0.user.model';
+import { Auth0Profile } from '../../../../shared/model/auth0.profile.model';
 
 @Component({
   selector: 'app-feedback-event-detail',
@@ -23,7 +25,9 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   unauthorised = false;
 
-  user: any;
+  alertErrorMessage: string = '';
+
+  user: Auth0Profile;
 
   overallFeelingImgUrl: string = '../assets/images/glassy-smiley-amber.png';
 
@@ -31,14 +35,12 @@ export class FeedbackEventDetailComponent implements OnInit {
     private router: Router,
     private feedbackEventService: FeedbackEventsService,
     private http: HttpClient,
-    private authorisationService: AuthService
+    public auth: AuthService
   ) {}
 
   ngOnInit(): void {
     this.retrieveOverallFeedbackImgUrl();
-    this.authorisationService.user$.subscribe((user) => {
-      this.user = user;
-    });
+    this.auth.user$.pipe(take(1)).subscribe((user) => (this.user = user));
   }
 
   onEventSelected(event) {
@@ -52,6 +54,9 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   onEditFeedbackEvent(event) {
     event.preventDefault();
+    if (this.user.sub !== this.feedbackEvent.createdBy) {
+      return this.setErrorCondition('You are not allowed to edit this event');
+    }
     this.router.navigate(
       ['feedbackEventsHome', 'createOrUpdateFeedbackEvent'],
       {
@@ -64,6 +69,9 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   onDeleteFeedback(event) {
     event.preventDefault();
+    if (this.user.sub !== this.feedbackEvent.createdBy) {
+      return this.setErrorCondition('You are not allowed to delete this event');
+    }
     const apiUrl = `${env.api.serverUrl}/feedbackEvents/${this.feedbackEvent.id}`;
     this.http
       .delete(apiUrl)
@@ -93,6 +101,10 @@ export class FeedbackEventDetailComponent implements OnInit {
       );
   }
 
+  doesUserOwnEvent() {
+    return this.user.sub === this.feedbackEvent.createdBy;
+  }
+
   //-----> Private stuff
 
   private async retrieveOverallFeedbackImgUrl() {
@@ -102,5 +114,16 @@ export class FeedbackEventDetailComponent implements OnInit {
         this.overallFeelingImgUrl = response.feelingUrl;
         this.feedbackEvent = response.event;
       });
+  }
+
+  private setErrorCondition(alertMessage: string) {
+    this.errorOccurred = true;
+    this.unauthorised = true;
+    this.alertErrorMessage = alertMessage;
+    setTimeout(() => {
+      this.errorOccurred = false;
+      this.unauthorised = false;
+      this.alertErrorMessage = '';
+    }, 2000);
   }
 }

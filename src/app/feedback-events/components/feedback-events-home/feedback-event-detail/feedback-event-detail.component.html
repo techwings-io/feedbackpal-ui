@@ -4,14 +4,13 @@
     <div class="card">
       <div class="card-header">Event</div>
       <div
-        class="alert alert-danger alert-dismissible fade show"
+        class="alert alert-danger alert-dismissible fade show text-center"
         role="alert"
         *ngIf="errorOccurred"
       >
-        <p *ngIf="unauthorised">You are not allowed to delete this event</p>
-        <p *ngIf="!unauthorised">
-          An error occurred while deleting this event. Please check the console
-          logs
+        <p *ngIf="alertErrorMessage">{{ alertErrorMessage }}</p>
+        <p *ngIf="!alertErrorMessage">
+          An error occurred. Please check the console.
         </p>
         <button
           type="button"
@@ -51,15 +50,10 @@
         <button
           class="btn btn-primary mr-1"
           (click)="onEditFeedbackEvent($event)"
-          [disabled]="user.sub !== feedbackEvent.createdBy"
         >
           Edit
         </button>
-        <button
-          class="btn btn-danger"
-          (click)="onDeleteFeedback($event)"
-          [disabled]="user.sub !== feedbackEvent.createdBy"
-        >
+        <button class="btn btn-danger" (click)="onDeleteFeedback($event)">
           Delete
         </button>
       </div>
