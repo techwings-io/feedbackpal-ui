@@ -12,15 +12,8 @@
       events. Events can be of any type, e.g. meetings, company-wide events,
       etc. To get started, select an event and leave your feedback.
     </p>
-    <button
-      class="btn btn-success"
-      (click)="visitFeedbackEventsHome()"
-      [disabled]="!cookiesAccepted"
-    >
+    <button class="btn btn-success" (click)="visitFeedbackEventsHome()">
       Get Started
     </button>
-    <div class="alert alert-warning mt-5" role="alert" *ngIf="!cookiesAccepted">
-      Please accept our Cookie policy (below) before proceeding
-    </div>
   </div>
 </div>
