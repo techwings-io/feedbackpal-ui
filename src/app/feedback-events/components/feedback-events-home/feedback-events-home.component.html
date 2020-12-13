@@ -54,7 +54,7 @@
       [feedbackEvent]="feedbackEvent"
     ></app-feedback-event-detail>
   </ng-container>
-  <div class="row mt-2">
+  <div class="row mt-2" *ngIf="areThereAnyFeedbackEvents()">
     <div class="col-sm"></div>
     <div class="col-sm">
       <pagination-controls
