@@ -51,10 +51,15 @@
         <button
           class="btn btn-primary mr-1"
           (click)="onEditFeedbackEvent($event)"
+          [disabled]="user.sub !== feedbackEvent.createdBy"
         >
           Edit
         </button>
-        <button class="btn btn-danger" (click)="onDeleteFeedback($event)">
+        <button
+          class="btn btn-danger"
+          (click)="onDeleteFeedback($event)"
+          [disabled]="user.sub !== feedbackEvent.createdBy"
+        >
           Delete
         </button>
       </div>

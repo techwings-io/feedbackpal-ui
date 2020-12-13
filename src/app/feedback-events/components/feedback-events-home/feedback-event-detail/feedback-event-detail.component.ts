@@ -8,6 +8,7 @@ import { environment as env } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { take, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-feedback-event-detail',
@@ -22,16 +23,22 @@ export class FeedbackEventDetailComponent implements OnInit {
 
   unauthorised = false;
 
+  user: any;
+
   overallFeelingImgUrl: string = '../assets/images/glassy-smiley-amber.png';
 
   constructor(
     private router: Router,
     private feedbackEventService: FeedbackEventsService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authorisationService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.retrieveOverallFeedbackImgUrl();
+    this.authorisationService.user$.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   onEventSelected(event) {
