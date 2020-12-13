@@ -28,7 +28,7 @@
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="navbar-nav mr-auto">
+      <li class="navbar-nav mr-auto" *ngIf="cookiesAccepted">
         <a class="nav-link" routerLink="feedbackEventsHome">Events</a>
       </li>
     </ul>
