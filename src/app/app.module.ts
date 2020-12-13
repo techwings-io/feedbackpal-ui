@@ -6,10 +6,6 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  NgcCookieConsentModule,
-  NgcCookieConsentConfig,
-} from 'ngx-cookieconsent';
 
 import { environment as env } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,22 +22,10 @@ import { ProfileComponent } from './profile/profile/profile.component';
 import { environment } from '../environments/environment';
 
 import { NgxPaginationModule } from 'ngx-pagination';
-
-const cookieConfig: NgcCookieConsentConfig = {
-  cookie: {
-    domain: 'techwings.io', // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
-  },
-  palette: {
-    popup: {
-      background: '#000',
-    },
-    button: {
-      background: '#f1d600',
-    },
-  },
-  theme: 'edgeless',
-  type: 'info',
-};
+import {
+  NgcCookieConsentConfig,
+  NgcCookieConsentModule,
+} from 'ngx-cookieconsent';
 
 @NgModule({
   declarations: [
@@ -67,7 +51,6 @@ const cookieConfig: NgcCookieConsentConfig = {
     }),
     BrowserAnimationsModule,
     NgxPaginationModule,
-    NgcCookieConsentModule.forRoot(cookieConfig),
   ],
   providers: [
     {
