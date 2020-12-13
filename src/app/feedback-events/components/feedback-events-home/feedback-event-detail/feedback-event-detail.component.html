@@ -3,6 +3,25 @@
   <div class="col-sm">
     <div class="card">
       <div class="card-header">Event</div>
+      <div
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+        *ngIf="errorOccurred"
+      >
+        <p *ngIf="unauthorised">You are not allowed to delete this event</p>
+        <p *ngIf="!unauthorised">
+          An error occurred while deleting this event. Please check the console
+          logs
+        </p>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <div class="card-body">
         <div class="row">
           <div class="col-sm-8">

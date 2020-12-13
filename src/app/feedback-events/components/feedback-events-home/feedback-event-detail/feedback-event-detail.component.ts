@@ -18,6 +18,10 @@ export class FeedbackEventDetailComponent implements OnInit {
   @Input()
   feedbackEvent: FeedbackEvent;
 
+  errorOccurred = false;
+
+  unauthorised = false;
+
   overallFeelingImgUrl: string = '../assets/images/glassy-smiley-amber.png';
 
   constructor(
@@ -56,24 +60,30 @@ export class FeedbackEventDetailComponent implements OnInit {
     const apiUrl = `${env.api.serverUrl}/feedbackEvents/${this.feedbackEvent.id}`;
     this.http
       .delete(apiUrl)
-      .pipe(
-        take(1),
-        catchError((err) => {
-          return throwError(
-            `Error occurred while invoking ${apiUrl}. Event ${
-              this.feedbackEvent.id
-            } has not been deleted.
-            The error is ${JSON.stringify(err)}`
-          );
-        })
-      )
-      .subscribe(() => {
-        this.router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/feedbackEventsHome']);
-          });
-      });
+      .pipe(take(1))
+      .subscribe(
+        () => {
+          this.errorOccurred = false;
+          this.unauthorised = false;
+          this.router
+            .navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['/feedbackEventsHome']);
+            });
+        },
+        (error) => {
+          this.errorOccurred = true;
+
+          if (error.status === 401) {
+            this.unauthorised = true;
+          }
+          console.log('Error occurred', error);
+          setTimeout(() => {
+            this.errorOccurred = false;
+            this.unauthorised = false;
+          }, 2000);
+        }
+      );
   }
 
   //-----> Private stuff
