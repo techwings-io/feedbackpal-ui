@@ -8,6 +8,7 @@ import { take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { PaginatedResultsDto } from '../../shared/pagination/paginated-results-dto';
 import { Router } from '@angular/router';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
 
 @Component({
   selector: 'app-my-feedbackpal-home',
@@ -27,8 +28,11 @@ export class MyFeedbackpalHomeComponent implements OnInit {
 
   constructor(
     private myFeedbackpalService: MyFeedbackpalService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private ccService: NgcCookieConsentService
+  ) {
+    this.ccService.close(false);
+  }
 
   ngOnInit(): void {
     this.fetchMyFeedbacks();
