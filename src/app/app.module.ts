@@ -40,7 +40,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     },
   },
   theme: 'edgeless',
-  type: 'info',
+  type: 'opt-out',
 };
 
 @NgModule({

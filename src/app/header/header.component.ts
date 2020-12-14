@@ -8,6 +8,7 @@ import {
 import { Subscription } from 'rxjs';
 
 import { environment as env } from '../../environments/environment';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,21 +16,50 @@ import { environment as env } from '../../environments/environment';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  cookiesAccepted = false;
-
   private statusChangeSubscription: Subscription;
+  private revokeChoiceSubscription: Subscription;
+
+  routerFreshSubscription: Subscription;
+
+  cookiesAccepted = false;
 
   constructor(
     public auth: AuthService,
     private http: HttpClient,
-    private ccService: NgcCookieConsentService
-  ) {}
+    private ccService: NgcCookieConsentService,
+    private router: Router
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.routerFreshSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
+    if (localStorage.getItem(env.cookieConsent.localStorageKey)) {
+      this.cookiesAccepted = JSON.parse(
+        localStorage.getItem(env.cookieConsent.localStorageKey)
+      );
+      console.log('User cookies consent', this.cookiesAccepted);
+    } else {
+      this.cookiesAccepted = false;
+    }
     this.statusChangeSubscription = this.ccService.statusChange$.subscribe(
       (event: NgcStatusChangeEvent) => {
-        this.cookiesAccepted = event.status === 'allow';
-        console.log('cookies accepted', this.cookiesAccepted);
+        const userConsentedToCookies = event.status === 'allow' ? true : false;
+        this.storeCookiePreferenceInLocalStorage(userConsentedToCookies);
+      }
+    );
+
+    this.revokeChoiceSubscription = this.ccService.revokeChoice$.subscribe(
+      () => {
+        console.log('Revoking cookies consent');
+
+        this.storeCookiePreferenceInLocalStorage(false);
       }
     );
   }
@@ -40,5 +70,16 @@ export class HeaderComponent implements OnInit {
       .subscribe((data) => {
         console.log(data);
       });
+  }
+
+  //-------> Private stuff
+  private storeCookiePreferenceInLocalStorage(accepted: boolean) {
+    console.log('Storing user cookie preference to local storage');
+
+    localStorage.setItem(
+      env.cookieConsent.localStorageKey,
+      JSON.stringify(accepted)
+    );
+    this.cookiesAccepted = accepted;
   }
 }

@@ -15,6 +15,9 @@ export const environment = {
   api: {
     serverUrl,
   },
+  cookieConsent: {
+    localStorageKey: 'feedbackpal.cookie.consent',
+  },
 };
 
 /*
