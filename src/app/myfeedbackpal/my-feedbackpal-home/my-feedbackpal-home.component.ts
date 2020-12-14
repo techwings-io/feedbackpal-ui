@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MyFeedbacksDto } from '../dtos/my.feedbacks.dto';
 
-import { environment as env } from '../../../environments/environment';
 import { PaginationDto } from '../../../shared/pagination/pagination-dto';
 import { MyFeedbackpalService } from '../services/myfeedbackpal.service';
 import { take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { PaginatedResultsDto } from '../../shared/pagination/paginated-results-dto';
 import { Router } from '@angular/router';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
 
 @Component({
   selector: 'app-my-feedbackpal-home',
@@ -24,15 +22,10 @@ export class MyFeedbackpalHomeComponent implements OnInit {
   tableSize = 10;
   tableSizes = [10, 20, 30, 40, 50];
 
-  private apiUrl = `${env.api.serverUrl}/myFeedbackpal/myFeedbacks`;
-
   constructor(
     private myFeedbackpalService: MyFeedbackpalService,
-    private router: Router,
-    private ccService: NgcCookieConsentService
-  ) {
-    this.ccService.close(false);
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchMyFeedbacks();
