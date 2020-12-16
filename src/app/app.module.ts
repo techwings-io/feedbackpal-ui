@@ -26,6 +26,7 @@ import {
   NgcCookieConsentConfig,
   NgcCookieConsentModule,
 } from 'ngx-cookieconsent';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -68,6 +69,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     BrowserAnimationsModule,
     NgxPaginationModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
+    NgbModule,
   ],
   providers: [
     {

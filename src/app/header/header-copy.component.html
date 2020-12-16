@@ -17,17 +17,38 @@
     aria-controls="navbarSupportedContent"
     aria-expanded="false"
     aria-label="Toggle navigation"
-  ></button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home</a>
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/"
+          >Home <span class="sr-only">(current)</span></a
+        >
       </li>
       <li
         class="navbar-nav mr-auto"
         *ngIf="(auth.isAuthenticated$ | async) === true && cookiesAccepted"
       >
         <a class="nav-link" routerLink="/feedbackEventsHome">Events</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-5">
+      <li class="nav-item mr-2">
+        <app-login-button
+          *ngIf="(auth.isAuthenticated$ | async) === false && cookiesAccepted"
+        ></app-login-button>
+      </li>
+      <li
+        class="nav-item mr-2"
+        *ngIf="(auth.isAuthenticated$ | async) === false && cookiesAccepted"
+      >
+        <app-signup-button></app-signup-button>
+      </li>
+      <li class="nav-item mr-2" *ngIf="auth.isAuthenticated$ | async">
+        <app-logout-button></app-logout-button>
       </li>
       <li class="nav-item dropdown" *ngIf="auth.isAuthenticated$ | async">
         <a
@@ -50,20 +71,6 @@
             >My Feedbacks</a
           >
         </div>
-      </li>
-      <li class="nav-item">
-        <app-login-button
-          *ngIf="(auth.isAuthenticated$ | async) === false && cookiesAccepted"
-        ></app-login-button>
-      </li>
-      <li
-        class="nav-item"
-        *ngIf="(auth.isAuthenticated$ | async) === false && cookiesAccepted"
-      >
-        <app-signup-button></app-signup-button>
-      </li>
-      <li class="nav-item" *ngIf="auth.isAuthenticated$ | async">
-        <app-logout-button></app-logout-button>
       </li>
     </ul>
   </div>

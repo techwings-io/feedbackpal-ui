@@ -9,8 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-prebuild": "npm i -g @angular/cli",
-    "postinstall": "ngcc"
+    "heroku-prebuild": "npm i -g @angular/cli"
   },
   "engines": {
     "node": "14.x",
@@ -25,11 +24,13 @@
     "@angular/compiler": "~10.2.3",
     "@angular/core": "^10.2.3",
     "@angular/forms": "~10.2.3",
+    "@angular/localize": "^10.2.3",
     "@angular/material": "^10.2.7",
     "@angular/platform-browser": "~10.2.3",
     "@angular/platform-browser-dynamic": "~10.2.3",
     "@angular/router": "~10.2.3",
     "@auth0/auth0-angular": "^1.2.0",
+    "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^5.0.0-alpha1",
     "cookieconsent": "^3.1.1",
     "express": "^4.17.1",
