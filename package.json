@@ -30,7 +30,6 @@
     "@angular/platform-browser-dynamic": "~10.2.3",
     "@angular/router": "~10.2.3",
     "@auth0/auth0-angular": "^1.2.0",
-    "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^5.0.0-alpha1",
     "cookieconsent": "^3.1.1",
     "express": "^4.17.1",
