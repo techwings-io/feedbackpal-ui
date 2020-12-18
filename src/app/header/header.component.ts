@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import {
   NgcCookieConsentService,
@@ -15,7 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private statusChangeSubscription: Subscription;
   private revokeChoiceSubscription: Subscription;
 
@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    private http: HttpClient,
     private ccService: NgcCookieConsentService,
     private router: Router
   ) {
@@ -64,12 +63,16 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  testJwt() {
-    return this.http
-      .post(`${env.api.serverUrl}/auth/test/jwt`, {})
-      .subscribe((data) => {
-        console.log(data);
-      });
+  ngOnDestroy(): void {
+    if (this.revokeChoiceSubscription) {
+      this.revokeChoiceSubscription.unsubscribe();
+    }
+    if (this.routerFreshSubscription) {
+      this.routerFreshSubscription.unsubscribe();
+    }
+    if (this.statusChangeSubscription) {
+      this.statusChangeSubscription.unsubscribe();
+    }
   }
 
   //-------> Private stuff
