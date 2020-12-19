@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["uuid"],
+            "allowedCommonJsDependencies": ["uuid", "bad-words"],
             "outputPath": "dist/feedbackpal-ui-gen",
             "index": "src/index.html",
             "main": "src/main.ts",

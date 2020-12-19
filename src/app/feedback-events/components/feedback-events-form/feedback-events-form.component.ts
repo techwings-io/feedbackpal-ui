@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError, take } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
+import BadWordsFilter from 'bad-words';
 
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { Auth0Profile } from '../../../shared/model/auth0.profile.model';
@@ -34,6 +35,8 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
   usersToShareWith$: Subscription;
   feedbackEventsForm: FormGroup;
 
+  filter: BadWordsFilter;
+
   constructor(
     private auth: AuthService,
     private feedbackEventsService: FeedbackEventsService,
@@ -42,6 +45,7 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) private locale: string,
     private http: HttpClient
   ) {
+    this.filter = new BadWordsFilter();
     this.selectedEvent = history.state.data;
     // Invoke API to get user details for selected users
     if (this.selectedEvent) {
@@ -104,13 +108,16 @@ export class FeedbackEventsFormComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Form was submitted');
-    const {
+    let {
       eventName,
       description,
       publicEvent,
       validFrom,
       validTo,
     } = this.feedbackEventsForm.value;
+
+    eventName = this.filter.clean(eventName);
+    description = this.filter.clean(description);
 
     const validFromUtc = new Date(validFrom);
     const validToUtc = new Date(validTo);

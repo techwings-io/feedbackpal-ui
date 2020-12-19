@@ -62,8 +62,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.statusChangeSubscription.unsubscribe();
-    this.revokeChoiceSubscription.unsubscribe();
+    if (this.statusChangeSubscription) {
+      this.statusChangeSubscription.unsubscribe();
+    }
+    if (this.revokeChoiceSubscription) {
+      this.revokeChoiceSubscription.unsubscribe();
+    }
+
     if (this.routerFreshSubscription) {
       this.routerFreshSubscription.unsubscribe();
     }

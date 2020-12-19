@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
-  ElementRef,
   OnDestroy,
   EventEmitter,
   Output,
@@ -14,11 +12,11 @@ import { FeedbackService } from '../../../shared/services/feedback.service';
 import { FeedbackEvent } from '../../../shared/model/feedback-events.model';
 import { SubmitFeedback } from '../../../shared/model/submit.feedback.model';
 import { AuthService } from '@auth0/auth0-angular';
+import BadWordsFilter from 'bad-words';
 
 import { Subscription } from 'rxjs';
 import { UserSearchService } from '../../../shared/services/user-search.service';
 import { Auth0UserModel } from 'src/app/shared/model/auth0.user.model';
-import { uuidv4 as uuid } from 'uuid';
 import { Router } from '@angular/router';
 
 @Component({
@@ -54,6 +52,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
 
   feedbackSubmittedSuccessfully = false;
 
+  filter: BadWordsFilter;
+
   @Input()
   createdBy: string;
 
@@ -63,6 +63,7 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
     private userSearchService: UserSearchService,
     private router: Router
   ) {
+    this.filter = new BadWordsFilter();
     this.selectedUsersToShareWith$ = this.userSearchService.userToShareWithSelected$.subscribe(
       (user) => {
         this.selectedUsersToShareWith.push(user);
@@ -110,6 +111,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       lastCreated: new Date(),
       feeling: this.smiley.feeling,
     };
+
+    feedback.comments = this.filter.clean(feedback.comments);
 
     this.feedbackService
       .storeFeedback(feedback)
