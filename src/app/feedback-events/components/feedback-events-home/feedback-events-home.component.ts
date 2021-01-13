@@ -85,7 +85,6 @@ export class FeedbackEventsHomeComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((paginatedResults: PaginatedResultsDto<FeedbackEvent>) => {
-        console.log('paginated results', paginatedResults);
         this.feedbackEvents = paginatedResults.data;
         this.count = paginatedResults.totalCount;
       });

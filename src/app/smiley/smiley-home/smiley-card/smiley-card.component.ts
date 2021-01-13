@@ -111,8 +111,9 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       lastCreated: new Date(),
       feeling: this.smiley.feeling,
     };
-
-    feedback.comments = this.filter.clean(feedback.comments);
+    if (feedback.comments) {
+      feedback.comments = this.filter.clean(feedback.comments);
+    }
 
     this.feedbackService
       .storeFeedback(feedback)
