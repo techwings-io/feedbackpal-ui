@@ -47,6 +47,15 @@
         <div class="col-sm"></div>
       </div>
     </div>
+    <p class="text-center">
+      Do you want to make this feedback private? (Default is public)
+      <span
+        ><input
+          name="privateFeedback"
+          type="checkbox"
+          [(ngModel)]="privateEvent"
+      /></span>
+    </p>
 
     <p class="card-body">
       {{ smiley.cardText }}

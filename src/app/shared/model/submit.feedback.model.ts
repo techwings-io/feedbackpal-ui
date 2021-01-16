@@ -6,4 +6,5 @@ export interface SubmitFeedback {
   lastCreated: Date;
   feeling: Feeling;
   comments: string;
+  private: boolean;
 }

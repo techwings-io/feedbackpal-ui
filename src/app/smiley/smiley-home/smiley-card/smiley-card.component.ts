@@ -52,6 +52,8 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
 
   feedbackSubmittedSuccessfully = false;
 
+  privateEvent = false;
+
   filter: BadWordsFilter;
 
   @Input()
@@ -109,6 +111,7 @@ export class SmileyCardComponent implements OnInit, OnDestroy {
       createdBy: this.createdBy,
       eventId: this.selectedEvent.id,
       lastCreated: new Date(),
+      private: this.privateEvent,
       feeling: this.smiley.feeling,
     };
     if (feedback.comments) {
